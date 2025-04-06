@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AndaFP</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js"></script>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">AndaFP</div>
+    <nav class="nav">
+      <a href="#">Mis ofertas</a>
+      <a href="#">Acceder</a>
+    </nav>
+  </header>
+  <main class="main">
+    <h1 class="title">Encuentra prácticas de FP<br>en Andalucía</h1>
+
+    <form class="search-form">
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="Buscar ofertas" oninput="showSuggestions()">
+        <ul id="suggestionsList" class="suggestions-list"></ul>
+      </div>
+      <button type="submit">Buscar</button>
+    </form>
+    
+
+    <div class="cards">
+      <div class="card">
+        <i class="material-icons icon">school</i>
+        <h2>Para estudiantes</h2>
+        <p>Explora las ofertas de prácticas y presenta tu candidatura</p>
+        <a href="#" class="btn">Ver ofertas</a>
+      </div>
+
+      <div class="card">
+        <i class="material-icons icon ">business_center</i>
+        <h2>Para empresas</h2>
+        <p>Publica ofertas de prácticas y gestiona tus candidatos</p>
+        <a href="#" class="btn">Publicar oferta</a>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    Proyecto Fin de Grado realizado por Jesús Reyes Espejo
+    <br>IES Kursaal, 2025
+  </footer>
+</body>
+
+</html>

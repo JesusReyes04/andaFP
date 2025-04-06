@@ -1,0 +1,232 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+    padding: 2rem;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #111827;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+/* Main */
+.main {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+/* Buscador */
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+.search-form input {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 300px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    /* outline: #006331 solid 1px; */
+}
+
+.search-form button {
+    background-color: #006331;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-form button:hover {
+    background-color: #009a4d;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: left;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 300px;
+    transition: ease-in-out 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px) scale(1.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card .icon {
+    font-size: 2rem;
+    color: #006331;
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    color: #4b634b;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #006331;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #009a4d;
+}
+
+.icon {
+    font-size: 2.5rem;
+    color: #006331;
+    margin-bottom: 1rem;
+    display: inline-block;
+    line-height: 1;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6b806b;
+    padding: 2rem 1rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f3f4f6;
+    margin: 0;
+    margin-top: 4rem;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column;
+        /* Cambiar de fila a columna */
+        align-items: center;
+        /* Centrar las tarjetas horizontalmente */
+        justify-content: center;
+        /* Asegurarse de que las tarjetas estén centradas */
+    }
+
+}
+
+@media (min-width: 768px) {
+    .cards {
+        flex-direction: row;
+        /* Cambiar a fila cuando la pantalla sea mayor a 768px */
+        justify-content: space-evenly;
+        /* Espacio equilibrado entre las tarjetas */
+    }
+}
+
+
+.suggestions-list {
+    position: absolute;
+    top: 100%; /* justo debajo del input */
+    left: 0;
+    width: 100%; /* igual al input */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 100;
+}
+
+.suggestions-list li {
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.suggestions-list li:hover {
+    background-color: #f3f4f6;
+}
+
+.search-form {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #006331;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 300px; /* mismo ancho que el input */
+}
