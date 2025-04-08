@@ -35,6 +35,30 @@ body {
     color: #111827;
     font-weight: 500;
     font-size: 1.3rem;
+    transition: color 0.2s ease-in-out;
+    position: relative;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out, transform-origin 0s 0.3s; /* espera a que termine la animación */
+}
+
+.nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: right;
+}
+
+.nav a:hover {
+    color: #000;
 }
 
 /* Main */
