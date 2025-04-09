@@ -31,8 +31,8 @@ body {
 }
 
 .card img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 20px;
 }
 
@@ -44,4 +44,35 @@ body {
 .card p {
     color: #666;
     font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-height: 700px) {
+    .card {
+        height: 250px;
+        padding: 15px;
+    }
+
+    .card img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 15px;
+    }
+
+    .card h3 {
+        font-size: 1.2em;
+    }
+
+    .card p {
+        font-size: 0.8em;
+    }
+    .cards{
+        margin-top: 50px;
+    }
 }

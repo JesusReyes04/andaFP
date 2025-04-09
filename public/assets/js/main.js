@@ -153,31 +153,104 @@ const suggestions = [
     "Mantenimiento aeromecánico de helicópteros con motor de turbina"
 ];
 
-// Función para mostrar las sugerencias
+const placeSuggestions = [
+    "Huelava",
+    "Sevilla",
+    "Cádiz",
+    "Córdoba",
+    "Granada",
+    "Jaén",
+    "Málaga",
+    "Almería"
+];
+
+// Función para mostrar sugerencias del primer input
 function showSuggestions() {
     const input = document.getElementById('searchInput').value;
     const suggestionsList = document.getElementById('suggestionsList');
 
-    // Filtrar las sugerencias que coinciden con lo que el usuario escribe
     const filteredSuggestions = suggestions.filter(suggestion =>
         suggestion.toLowerCase().includes(input.toLowerCase())
     );
 
-    // Si hay sugerencias, se muestran
     if (filteredSuggestions.length > 0 && input !== "") {
         suggestionsList.innerHTML = filteredSuggestions.map(suggestion =>
-            `<li onclick="selectSuggestion('${suggestion}')">${suggestion}</li>`
+            `<li onclick="selectSuggestion('${suggestion}', 'searchInput', 'suggestionsList')">${suggestion}</li>`
         ).join('');
-        suggestionsList.style.display = 'block'; // Mostrar lista de sugerencias
+        suggestionsList.style.display = 'block';
     } else {
         suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'none'; // Ocultar la lista si no hay coincidencias
+        suggestionsList.style.display = 'none';
     }
 }
 
-// Función que se ejecuta cuando el usuario selecciona una sugerencia
-function selectSuggestion(suggestion) {
-    const input = document.getElementById('searchInput');
-    input.value = suggestion; // Colocar la sugerencia seleccionada en el input
-    document.getElementById('suggestionsList').style.display = 'none'; // Ocultar la lista de sugerencias
+// Función para mostrar sugerencias del segundo input
+function showPlaceSuggestions() {
+    const input = document.getElementById('placeInput').value;
+    const suggestionsList = document.getElementById('placeSuggestionsList');
+
+    const filteredSuggestions = placeSuggestions.filter(suggestion =>
+        suggestion.toLowerCase().includes(input.toLowerCase())
+    );
+
+    if (filteredSuggestions.length > 0 && input !== "") {
+        suggestionsList.innerHTML = filteredSuggestions.map(suggestion =>
+            `<li onclick="selectSuggestion('${suggestion}', 'placeInput', 'placeSuggestionsList')">${suggestion}</li>`
+        ).join('');
+        suggestionsList.style.display = 'block';
+    } else {
+        suggestionsList.innerHTML = '';
+        suggestionsList.style.display = 'none';
+    }
+}
+
+// Función genérica para seleccionar sugerencia en cualquier input
+function selectSuggestion(suggestion, inputId, listId) {
+    const input = document.getElementById(inputId);
+    input.value = suggestion;
+    document.getElementById(listId).style.display = 'none';
+}
+
+function validateSearch(placeInput, searchInput) {
+    const place = placeInput.value.trim().toLowerCase();
+    const grado = searchInput.value.trim().toLowerCase();
+
+    const validPlace = placeSuggestions.some(p => p.toLowerCase() === place);
+    const validGrado = suggestions.some(g => g.toLowerCase() === grado);
+
+    if (!validPlace || !validGrado) {
+        showError("El contenido de los campos debe coincidir con alguna de las sugerencias");
+        return;
+    }
+
+    // Aquí haces la búsqueda real
+    console.log("Buscar con:", { lugar: place, grado: grado });
+}
+
+function showError(mensaje) {
+    const errorDiv = document.createElement("div");
+    errorDiv.innerText = mensaje;
+    errorDiv.classList.add("error-message");
+
+    document.body.appendChild(errorDiv);
+
+    // Mostrar el mensaje de error
+    errorDiv.style.display = "block";
+
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
+}
+
+function validateInputsValues(e, placeInput, searchInput) { 
+    placeInput = placeInput.value.trim().toLowerCase();
+    searchInput = searchInput.value.trim().toLowerCase();
+    const validPlace = placeSuggestions.some(p => p.toLowerCase() === placeInput);
+    const validGrado = suggestions.some(g => g.toLowerCase() === searchInput);
+
+    if (!validPlace || !validGrado) {
+        showError("El contenido de los campos debe coincidir con alguna de las sugerencias.");
+        e.preventDefault();
+        return;
+    }
 }

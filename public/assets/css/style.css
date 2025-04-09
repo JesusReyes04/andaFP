@@ -49,7 +49,8 @@ body {
     background-color: black;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s ease-in-out, transform-origin 0s 0.3s; /* espera a que termine la animación */
+    transition: transform 0.3s ease-in-out, transform-origin 0s 0.3s;
+    /* espera a que termine la animación */
 }
 
 .nav a:hover::after {
@@ -187,6 +188,7 @@ body {
 body {
     margin: 0;
     padding: 0;
+
 }
 
 @media (max-width: 768px) {
@@ -197,6 +199,20 @@ body {
         /* Centrar las tarjetas horizontalmente */
         justify-content: center;
         /* Asegurarse de que las tarjetas estén centradas */
+    }
+
+    .search-form {
+        flex-direction: column;
+        /* Cambiar a columna para pantallas pequeñas */
+        align-items: center;
+        /* Centrar los elementos */
+    }
+
+    .title {
+        font-size: 2.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        /* Tamaño de fuente más pequeño para pantallas pequeñas */
     }
 
 }
@@ -213,9 +229,11 @@ body {
 
 .suggestions-list {
     position: absolute;
-    top: 100%; /* justo debajo del input */
+    top: 100%;
+    /* justo debajo del input */
     left: 0;
-    width: 100%; /* igual al input */
+    width: 100%;
+    /* igual al input */
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -252,5 +270,39 @@ body {
 
 .search-wrapper {
     position: relative;
-    width: 300px; /* mismo ancho que el input */
+    width: 300px;
+    /* mismo ancho que el input */
+}
+
+.place-wrapper {
+    position: relative;
+    width: 300px;
+    /* igual que el input */
+    margin: 0 auto;
+    /* centrado horizontal si es necesario */
+}
+
+/* Ajustar la lista de sugerencias dentro de place-wrapper */
+.place-wrapper .suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    /* ocupar todo el ancho del input */
+    z-index: 100;
+    transform: none;
+}
+
+.error-message {
+    background: red;
+    color: white;
+    padding: 1em;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    z-index: 9999;
+    display: none;
+    /* Al principio no se muestra */
 }

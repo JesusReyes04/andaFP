@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/andaFP/public/assets/css/login-select.css">
+    <link rel="shortcut icon" href="/andafp/public/assets/favicon/andaFP.ico" type="image/x-icon">
+    
+    <!-- script temporal ya lo moveré a un archivo normal, de momento paso de rayarme -->
+    <script>
+        let cards = document.querySelectorAll('.card');
+        cards.addEventListener('click', function () {
+            
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card" onclick="location.href='/andafp/public/users/students/login.html'">
+            <img src="/andafp/public/assets/img/estudiante.png" alt="Estudiante">
+            <h3>Estudiante</h3>
+            <p>Accede como estudiante para aplicar a ofertas.</p>
+        </div>
+        <div class="card" onclick="location.href='/andafp/public/users/companies/login.html'">
+            <img src="/andafp/public/assets/img/empresaria.png" alt="Empresa">
+            <h3>Empresa</h3>
+            <p>Accede como empresa y publica tus propias ofertas.</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="openModal">Iniciar sesión</button>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2>¿Quién eres?</h2>
+            <button onclick="location.href='/andafp/public/users/students/login.html'">Estudiante</button>
+            <button onclick="location.href='/andafp/public/users/companies/login.html'">Empresa</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    const modal = document.getElementById("modal");
+    document.getElementById("openModal").onclick = () => modal.style.display = "block";
+    document.getElementById("closeModal").onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+</script>
+    
+    -->

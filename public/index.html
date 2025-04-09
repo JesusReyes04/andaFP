@@ -8,6 +8,35 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css">
   <script src="./assets/js/main.js"></script>
+  <script>
+    window.onload = function () {
+      const searchInput = document.getElementById('searchInput');
+      const placeInput = document.getElementById('placeInput');
+      const suggestionsList = document.getElementById('suggestionsList');
+      const placeSuggestionsList = document.getElementById('placeSuggestionsList');
+      const form = document.getElementById("searchForm");
+
+      searchInput.addEventListener('input', showSuggestions);
+      placeInput.addEventListener('input', showPlaceSuggestions);
+
+      searchInput.addEventListener('focus', () => {
+        placeSuggestionsList.style.display = 'none';
+        suggestionsList.style.display = 'block';
+      });
+
+      placeInput.addEventListener('focus', () => {
+        suggestionsList.style.display = 'none';
+        placeSuggestionsList.style.display = 'block';
+      });
+
+      form.addEventListener('submit', function (event) {
+        validateInputsValues(event, placeInput, searchInput);
+      });
+
+    };
+
+
+  </script>
   <link rel="shortcut icon" href="./assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -17,20 +46,24 @@
     <div class="logo">AndaFP</div>
     <nav class="nav">
       <a href="#">Mis ofertas</a>
-      <a href="#">Acceder</a>
+      <a href="login-select.html">Acceder</a>
     </nav>
   </header>
   <main class="main">
     <h1 class="title">Encuentra prácticas de FP<br>en Andalucía</h1>
 
-    <form class="search-form" action="" method="get">
+    <form class="search-form" action="" method="get" id="searchForm">
       <div class="search-wrapper">
-        <input type="text" id="searchInput" placeholder="Buscar ofertas" oninput="showSuggestions()">
+        <input type="text" id="searchInput" placeholder="Buscar ofertas" required>
         <ul id="suggestionsList" class="suggestions-list"></ul>
       </div>
-      <button type="submit">Buscar</button>
+      <div class="place-wrapper">
+        <input type="text" id="placeInput" placeholder="provincia">
+        <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+      </div>
+      <button type="submit" id="submitForm">Buscar</button>
     </form>
-    
+
 
     <div class="cards">
       <div class="card">
