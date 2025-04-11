@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AndaFP</title>
-    <link rel="stylesheet" href="/andaFP/public/assets/css/students-register-style.css">
+    <link rel="stylesheet" href="/andaFP/public/assets/css/companies-register-style.css">
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
 <body>
     <main>
         <form action="" method="post" class="loginForm" enctype="multipart/form-data">
-            <h2>Registro para Estudiantes</h2>
+            <h2>Registro para Empresas</h2>
 
             <div class="inputField">
-                <label for="first_name">Nombre</label>
-                <input type="text" id="first_name" name="first_name" required>
+                <label for="tax_id">CIF/NIF</label>
+                <input type="text" id="tax_id" name="tax_id" required>
             </div>
 
             <div class="inputField">
-                <label for="last_name">Apellidos</label>
-                <input type="text" id="last_name" name="last_name" required>
+                <label for="name">Nombre de la empresa</label>
+                <input type="text" id="name" name="name" required>
             </div>
 
             <div class="inputField">
@@ -32,6 +32,16 @@
             <div class="inputField">
                 <label for="email">Correo electrónico</label>
                 <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="inputField">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="inputField">
+                <label for="password_confirm">Confirmar contraseña</label>
+                <input type="password" id="password_confirm" name="password_confirm" required>
             </div>
 
             <div class="inputField">
@@ -50,32 +60,17 @@
             </div>
 
             <div class="inputField">
-                <label for="specialty">Nombre del ciclo formativo</label>
-                <input type="text" id="specialty" name="specialty" required>
+                <label for="sector">Sector</label>
+                <input type="text" id="sector" name="sector" required>
             </div>
 
             <div class="inputField">
-                <label for="educational_center">Centro educativo</label>
-                <input type="text" id="educational_center" name="educational_center" required>
+                <label for="description">Descripción de la empresa</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
             </div>
 
             <div class="inputField">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <div class="inputField">
-                <label for="password_confirm">Confirmar contraseña</label>
-                <input type="password" id="password_confirm" name="password_confirm" required>
-            </div>
-
-            <div class="inputField">
-                <label for="cv">Currículum (PDF)</label>
-                <input type="file" id="cv" name="cv" accept=".pdf" required>
-            </div>
-
-            <div class="inputField">
-                <label for="profile_picture">Foto de perfil (JPG, JPEG o PNG)</label>
+                <label for="profile_picture">Logo o imagen de perfil (JPG, JPEG o PNG)</label>
                 <input type="file" id="profile_picture" name="profile_picture" accept=".jpg, .jpeg, .png" required>
             </div>
 

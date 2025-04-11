@@ -1,4 +1,4 @@
-/* registro.css */
+/* companies-register-style.css */
 
 * {
     box-sizing: border-box;
@@ -59,16 +59,20 @@ main {
 .inputField input[type="email"],
 .inputField input[type="password"],
 .inputField input[type="tel"],
-.inputField input[type="file"] {
+.inputField input[type="file"],
+.inputField textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 0.75rem;
     border: 1px solid #d1d5db;
     border-radius: 0.5rem;
     font-size: 1rem;
     background-color: #f9fafb;
     transition: border-color 0.3s, background-color 0.3s;
+    resize: vertical;
 }
 
-.inputField input:focus {
+.inputField input:focus,
+.inputField textarea:focus {
     border-color: #006331;
     background-color: #ffffff;
     outline: none;
@@ -113,7 +117,7 @@ button[type="submit"]:hover {
 .footer {
     text-align: center;
     padding: 2rem 1rem;
-    font-size: 0.875rem;    
+    font-size: 0.875rem;
     color: #6b806b;
     border-top: 1px solid #e5e7eb;
     background-color: #f3f4f6;
@@ -146,9 +150,5 @@ button[type="submit"]:hover {
 }
 
 #profile_picture {
-    padding-left: 0;
-}
-
-#cv{
     padding-left: 0;
 }
