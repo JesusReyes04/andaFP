@@ -8,23 +8,30 @@
     <link rel="stylesheet" href="/andaFP/public/assets/css/login-select.css">
     <link rel="shortcut icon" href="/andafp/public/assets/favicon/andaFP.ico" type="image/x-icon">
     
-    <!-- script temporal ya lo moveré a un archivo normal, de momento paso de rayarme -->
     <script>
-        let cards = document.querySelectorAll('.card');
-        cards.addEventListener('click', function () {
-            
-        });
+        window.onload = function(){
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    if (card.id === 'students') {
+                        window.location.href = '/andaFP/public/users/students-login.html';
+                    } else if (card.id === 'companies') {
+                        window.location.href = '/andaFP/public/users/companies-login.html';
+                    }
+                });
+            });
+        }
     </script>
 </head>
 
 <body>
     <div class="container">
-        <div class="card" onclick="location.href='/andafp/public/users/students/login.html'">
+        <div class="card" id="students">
             <img src="/andafp/public/assets/img/estudiante.png" alt="Estudiante">
             <h3>Estudiante</h3>
             <p>Accede como estudiante para aplicar a ofertas.</p>
         </div>
-        <div class="card" onclick="location.href='/andafp/public/users/companies/login.html'">
+        <div class="card" id="companies">
             <img src="/andafp/public/assets/img/empresaria.png" alt="Empresa">
             <h3>Empresa</h3>
             <p>Accede como empresa y publica tus propias ofertas.</p>

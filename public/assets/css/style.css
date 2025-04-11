@@ -10,6 +10,8 @@ body {
     background-color: #f9fafb;
     color: #111827;
     padding: 2rem;
+    margin: 0;
+    padding: 0;
 }
 
 /* Header */
@@ -50,7 +52,6 @@ body {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease-in-out, transform-origin 0s 0.3s;
-    /* espera a que termine la animación */
 }
 
 .nav a:hover::after {
@@ -185,34 +186,22 @@ body {
     width: 100%;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-
-}
-
 @media (max-width: 768px) {
     .cards {
         flex-direction: column;
-        /* Cambiar de fila a columna */
         align-items: center;
-        /* Centrar las tarjetas horizontalmente */
         justify-content: center;
-        /* Asegurarse de que las tarjetas estén centradas */
     }
 
     .search-form {
         flex-direction: column;
-        /* Cambiar a columna para pantallas pequeñas */
         align-items: center;
-        /* Centrar los elementos */
     }
 
     .title {
         font-size: 2.5rem;
         padding-left: 1rem;
         padding-right: 1rem;
-        /* Tamaño de fuente más pequeño para pantallas pequeñas */
     }
 
 }
@@ -220,9 +209,7 @@ body {
 @media (min-width: 768px) {
     .cards {
         flex-direction: row;
-        /* Cambiar a fila cuando la pantalla sea mayor a 768px */
         justify-content: space-evenly;
-        /* Espacio equilibrado entre las tarjetas */
     }
 }
 
@@ -230,10 +217,8 @@ body {
 .suggestions-list {
     position: absolute;
     top: 100%;
-    /* justo debajo del input */
     left: 0;
     width: 100%;
-    /* igual al input */
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -305,4 +290,8 @@ body {
     z-index: 9999;
     display: none;
     /* Al principio no se muestra */
+}
+
+#placeInput:focus{
+    outline: #006331 solid 1px;
 }
