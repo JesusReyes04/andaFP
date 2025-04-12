@@ -295,3 +295,20 @@ body {
 #placeInput:focus{
     outline: #006331 solid 1px;
 }
+
+#svgAndalucia {
+    margin-top: 50px;
+    max-width: 540px;
+    height: auto;
+    padding: 20px;
+}
+
+.st0{fill:none;stroke:#000000;stroke-width:0.7521;}
+.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#006331;stroke:#fff;stroke-width:0.7521;}
+.st2{fill:none;stroke:#fff;stroke-width:2.5071;}
+
+.st1:hover{
+    fill: #009a4d;
+    transition: fill 0.3s ease-in-out;
+    cursor: pointer;
+}
