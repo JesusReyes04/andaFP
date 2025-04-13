@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.loginForm');
+    
 
     form.addEventListener('submit', function (e) {
         const taxId = document.getElementById('tax_id').value.trim();
@@ -46,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
             errors.push("La imagen de perfil debe estar en formato JPG, JPEG o PNG.");
         }
 
+        if (description.length < 20 || description.length > 500) {
+            errors.push("La descripción debe tener entre 20 y 500 caracteres.");
+        }
+        
         if (errors.length > 0) {
             e.preventDefault();
             alert(errors.join('\n'));

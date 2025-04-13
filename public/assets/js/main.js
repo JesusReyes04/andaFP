@@ -113,7 +113,7 @@ function validateInputsValues(e, placeInput, searchInput) {
     const validGrado = suggestions.some(g => g.toLowerCase() === searchValue);
     const validPlace = placeSuggestions.some(p => p.toLowerCase() === placeValue);
 
-    if (!(validGrado && validPlace) && !(validGrado && placeValue === "")){
+    if (!(validGrado && validPlace) && !(validGrado && placeValue === "") &&!(validPlace && searchValue ==="")) {
         showError("El contenido de los campos debe coincidir con alguna de las sugerencias.");
         e.preventDefault();
         return;
