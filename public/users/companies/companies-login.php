@@ -11,7 +11,7 @@
 
 <body>
     <main>
-        <form action="" method="post" class="loginForm">
+        <form action="/andaFP/src/backend/login/validate-login-companies.php" method="post" class="loginForm">
             <h2>Acceso para Empresas</h2>
             <div class="inputField">
                 <label for="username">Usuario o correo electrónico</label>
@@ -33,7 +33,7 @@
                 <p>¿Has olvidado tu contraseña? <a href="#">Recuperarla</a></p>
             </div>        
             <div class="extraLinks">
-                <p>¿Aún no tienes cuenta como empresa? <a href="/andaFP/public/users/companies/companies-register.html">Solicitar acceso</a></p>
+                <p>¿Aún no tienes cuenta como empresa? <a href="/andaFP/public/users/companies/companies-register.php">Solicitar acceso</a></p>
             </div>
         </div>
         
@@ -47,3 +47,13 @@
 </body>
 
 </html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['login_error'])) {
+    $error = $_SESSION['login_error'];
+    echo "<script>alert(" . json_encode($error) . ");</script>";
+    unset($_SESSION['login_error']);
+}
+?>

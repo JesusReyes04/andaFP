@@ -53,7 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (errors.length > 0) {
             e.preventDefault();
-            alert(errors.join('\n'));
+            showError(errors.join('\n'));
         }
     });
 });
+
+function showError(mensaje) {
+    const errorDiv = document.createElement("div");
+    errorDiv.innerText = mensaje;
+    errorDiv.classList.add("error-message");
+    document.body.appendChild(errorDiv);
+    errorDiv.style.display = "block";
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
+}

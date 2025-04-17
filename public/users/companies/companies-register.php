@@ -40,7 +40,7 @@
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
+
             <div class="inputField">
                 <label for="password_confirm">Confirmar contraseña</label>
                 <input type="password" id="password_confirm" name="password_confirm" required>
@@ -92,5 +92,14 @@
         <span>IES Kursaal, 2025.</span>
     </footer>
 </body>
-
 </html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['register_error'])) {
+    $error = json_encode($_SESSION['register_error']);
+    echo "<script>document.addEventListener('DOMContentLoaded', () => { showError($error); });</script>";
+    unset($_SESSION['register_error']);
+}
+?>
