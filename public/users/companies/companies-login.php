@@ -12,7 +12,7 @@
 <body>
     <main>
         <form action="/andaFP/src/backend/login/validate-login-companies.php" method="post" class="loginForm">
-            <h2>Acceso para Empresas</h2>
+            <h2 id="title">Acceso para empresas</h2>
             <div class="inputField">
                 <label for="username">Usuario o correo electrónico</label>
                 <input type="text" id="username" name="username" required autocomplete="off">

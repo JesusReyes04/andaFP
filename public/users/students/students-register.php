@@ -93,7 +93,7 @@
 
         <div class="extraLinksContainer">
             <div class="extraLinks">
-                <p>¿Ya tienes una cuenta? <a href="/andaFP/public/users/students/students-login.html">Inicia sesión</a>
+                <p>¿Ya tienes una cuenta? <a href="/andaFP/public/users/students/students-login.php">Inicia sesión</a>
                 </p>
             </div>
         </div>
@@ -105,7 +105,7 @@
     </footer>
 
     <script>
-       document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const specialtyInput = document.getElementById('specialty');
             const provinceInput = document.getElementById('province');
 
@@ -116,3 +116,13 @@
 </body>
 
 </html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
+    $error = json_encode($_SESSION['register_error']);
+    echo "<script>document.addEventListener('DOMContentLoaded', () => { showError($error); });</script>";
+    unset($_SESSION['register_error']);
+}
+?>

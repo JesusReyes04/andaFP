@@ -1,27 +1,31 @@
 <?php
 session_start();
 require('../db_conection/conection.php');
-
-// Obtener la conexión
 $conection = getConnection();
 
-// Verificar que la petición sea POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo "Método no permitido.";
+    $_SESSION['register_error'] = http_response_code(405) . " - Método no permitido.";
+    header("Location: /andaFP/public/users/students/students-register.php");
     exit();
 }
 
-// Validar campos obligatorios
+// mirar si está todo lo que se necesita
 $required_fields = ['first_name', 'last_name', 'username', 'email', 'password', 'educational_center'];
 foreach ($required_fields as $field) {
     if (empty($_POST[$field])) {
-        echo "El campo '$field' es obligatorio.";
+        $_SESSION['register_error'] = "El campo '$field' es obligatorio.";
+        header("Location: /andaFP/public/users/students/students-register.php");
         exit();
     }
 }
 
-// Recogida y sanitización de datos
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['register_error'] = "El formato del email no es válido.";
+    header("Location: /andaFP/public/users/students/students-register.php");
+    exit();
+}
+
+// limpiar los datos
 $first_name = ucfirst(strtolower(trim($_POST['first_name'])));
 $last_name = ucfirst(strtolower(trim($_POST['last_name'])));
 $username = trim($_POST['username']);
@@ -33,21 +37,21 @@ $specialty = trim($_POST['specialty'] ?? '');
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $educational_center = trim($_POST['educational_center']);
 
-// Verificar email o username duplicados
+// mirar que las cosas no estén diplicadas
 $checkQuery = $conection->prepare("SELECT id FROM students WHERE email = ? OR username = ?");
 $checkQuery->bind_param("ss", $email, $username);
 $checkQuery->execute();
 $checkQuery->store_result();
 
 if ($checkQuery->num_rows > 0) {
-    echo "El correo electrónico o nombre de usuario ya está registrado.";
+    $_SESSION['register_error'] = "El correo electrónico o nombre de usuario ya está registrado.";
     $checkQuery->close();
-    $conection->close();
+    header("Location: /andaFP/public/users/students/students-register.php");
     exit();
 }
+
 $checkQuery->close();
 
-// Manejo de archivos
 $profileImagePath = null;
 $cvPath = null;
 
@@ -57,7 +61,8 @@ if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] ===
     $profileImagePath = $profileImageDir . $profileImageName;
 
     if (!move_uploaded_file($_FILES['profile_picture']['tmp_name'], $profileImagePath)) {
-        echo "Error al subir la imagen de perfil.";
+        $_SESSION['register_error'] = "Error al subir la imagen de perfil.";
+        header("Location: /andaFP/public/users/students/students-register.php");
         exit();
     }
 }
@@ -68,12 +73,13 @@ if (isset($_FILES['cv']) && $_FILES['cv']['error'] === 0) {
     $cvPath = $cvDir . $cvName;
 
     if (!move_uploaded_file($_FILES['cv']['tmp_name'], $cvPath)) {
-        echo "Error al subir el CV.";
+        $_SESSION['register_error'] = "Error al subir el CV.";
+        header("Location: /andaFP/public/users/students/students-register.php");
         exit();
     }
 }
 
-// Insertar nuevo estudiante
+// meterlo a la base de datos
 $stmt = $conection->prepare("INSERT INTO students (
     first_name, last_name, username, email, phone, city, province,
     specialty, password, cv, educational_center, profile_picture
@@ -81,19 +87,30 @@ $stmt = $conection->prepare("INSERT INTO students (
 
 $stmt->bind_param(
     "ssssssssssss",
-    $first_name, $last_name, $username, $email, $phone, $city,
-    $province, $specialty, $password, $cvPath, $educational_center, $profileImagePath
+    $first_name,
+    $last_name,
+    $username,
+    $email,
+    $phone,
+    $city,
+    $province,
+    $specialty,
+    $password,
+    $cvPath,
+    $educational_center,
+    $profileImagePath
 );
 
 if ($stmt->execute()) {
-    $studentId = $stmt->insert_id;
-    setcookie("student_id", $studentId, 0, "/");
+    setcookie("student_id", $stmt->insert_id, 0, "/");
+    unset($_SESSION['register_error']);
     header("Location: /andaFP/public/dashboard/students-dashboard.php");
     exit();
 } else {
-    echo "Error al registrar: " . $stmt->error;
+    $_SESSION['register_error'] = "Error al registrar: " . $stmt->error;
+    header("Location: /andaFP/public/users/students/students-register.php");
+    exit();
 }
 
 $stmt->close();
 $conection->close();
-?>

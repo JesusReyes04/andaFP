@@ -34,6 +34,10 @@ main {
     max-width: 400px;
 }
 
+#title{
+    margin-bottom: 10px;
+}
+
 .inputField {
     width: 100%;
     margin-bottom: 1rem;

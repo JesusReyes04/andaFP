@@ -43,7 +43,6 @@ if ($query->num_rows === 1) {
 } else {
     $_SESSION['login_error'] = "Usuario o correo no encontrado.";
 }
-
 header("Location: /andaFP/public/users/companies/companies-login.php");
 exit();
 ?>

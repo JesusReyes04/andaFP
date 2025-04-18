@@ -194,3 +194,14 @@ function validateInputsValues(event, provinceInput, specialtyInput) {
         event.preventDefault();
     }
 }
+
+function showError(mensaje) {
+    const errorDiv = document.createElement("div");
+    errorDiv.innerText = mensaje;
+    errorDiv.classList.add("error-message");
+    document.body.appendChild(errorDiv);
+    errorDiv.style.display = "block";
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
+}

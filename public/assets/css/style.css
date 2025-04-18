@@ -289,7 +289,6 @@ body {
     border-radius: 10px;
     z-index: 9999;
     display: none;
-    /* Al principio no se muestra */
 }
 
 #placeInput:focus{

@@ -1,14 +1,17 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AndaFP</title>
     <link rel="stylesheet" href="/andaFP/public/assets/css/companies-register-style.css">
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
-    <script src="/andaFP/public/assets/js/sanitize-form-inputs.js"></script>
-    <script src="/andaFP/public/assets/js/validate-register-comapnies.js"></script>
 </head>
 
 <body>
@@ -53,7 +56,10 @@
 
             <div class="inputField">
                 <label for="province">Provincia</label>
-                <input type="text" id="province" name="province" required>
+                <div class="place-wrapper">
+                    <input type="text" id="province" name="province" autocomplete="off" required style="width: 100%;">
+                    <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+                </div>
             </div>
 
             <div class="inputField">
@@ -81,25 +87,32 @@
 
         <div class="extraLinksContainer">
             <div class="extraLinks">
-                <p>¿Ya tienes una cuenta? <a href="/andaFP/public/users/companies/companies-login.html">Inicia sesión</a></p>
+                <p>¿Ya tienes una cuenta? <a href="/andaFP/public/users/companies/companies-login.php">Inicia sesión</a></p>
             </div>
         </div>
     </main>
 
     <footer class="footer">
-        <span>Proyecto Fin de Grado realizado por Jesús Reyes Espejo</span>
-        <br>
+        <span>Proyecto Fin de Grado realizado por Jesús Reyes Espejo</span><br>
         <span>IES Kursaal, 2025.</span>
     </footer>
+
+    <script src="/andaFP/public/assets/js/sanitize-form-inputs.js"></script>
+    <script src="/andaFP/public/assets/js/validate-register-comapnies.js"></script>
+    <script>
+        const provinceInput = document.getElementById('province');
+        provinceInput.addEventListener('input', showPlaceSuggestions);
+    </script>
+    <?php if (isset($_SESSION['register_error'])): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                showError(<?= json_encode($_SESSION['register_error']) ?>);
+                const provinceInput = document.getElementById('province');
+                provinceInput.addEventListener('input', showPlaceSuggestions);
+            });
+        </script>
+        <?php unset($_SESSION['register_error']); ?>
+    <?php endif; ?>
+
 </body>
 </html>
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (isset($_SESSION['register_error'])) {
-    $error = json_encode($_SESSION['register_error']);
-    echo "<script>document.addEventListener('DOMContentLoaded', () => { showError($error); });</script>";
-    unset($_SESSION['register_error']);
-}
-?>

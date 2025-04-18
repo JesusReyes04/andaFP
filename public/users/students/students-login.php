@@ -11,7 +11,7 @@
 <body>
     <main>
         <form action="" method="post" class="loginForm">
-            <h2>AndaFP</h2>
+            <h2 id="title">Acceso para estudiantes</h2>
             <div class="inputField">
                 <label for="username">Nombre de usuario o correo</label>
                 <input type="text" id="username" name="username" required>
@@ -32,7 +32,7 @@
                 <p>¿Olvidaste tu contraseña? <a href="#">Recuperar contraseña</a></p>
             </div>        
             <div class="extraLinks">
-                <p>¿Aún no estás registrado? <a href="/andaFP/public/users/students/students-register.html">Regístrate</a></p>
+                <p>¿Aún no estás registrado? <a href="/andaFP/public/users/students/students-register.php">Regístrate</a></p>
             </div>
         </div>
         
