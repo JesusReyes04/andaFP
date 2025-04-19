@@ -18,7 +18,7 @@ $query->bind_result($profilePicturePath);
 $query->fetch();
 $query->close();
 
-// Obtener solo el nombre del archivo (por si guardaste la ruta completa)
+// Obtener solo el nombre del archivo
 $imageFileName = basename($profilePicturePath);
 ?>
 
