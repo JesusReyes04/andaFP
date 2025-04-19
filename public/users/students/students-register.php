@@ -1,3 +1,16 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
+    $error = json_encode($_SESSION['register_error']);
+    $showErrorScript = "<script>document.addEventListener('DOMContentLoaded', () => { showError($error); });</script>";
+    unset($_SESSION['register_error']);
+} else {
+    $showErrorScript = '';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -113,16 +126,7 @@
             provinceInput.addEventListener('input', showPlaceSuggestions);
         });
     </script>
+    <?php echo $showErrorScript; ?>
 </body>
 
 </html>
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
-    $error = json_encode($_SESSION['register_error']);
-    echo "<script>document.addEventListener('DOMContentLoaded', () => { showError($error); });</script>";
-    unset($_SESSION['register_error']);
-}
-?>
