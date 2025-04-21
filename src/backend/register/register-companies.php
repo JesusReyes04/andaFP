@@ -5,7 +5,7 @@ $conection = getConnection();
 
 // compruebo el post
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $_SESSION['register_error'] = http_response_code(405) . " - Método no permitido.";
+    $_SESSION['register_error'] = '405' . " - Método no permitido.";
     header("Location: /andaFP/public/users/companies/companies-register.php");
     exit();
 }

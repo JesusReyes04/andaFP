@@ -46,3 +46,13 @@
 </body>
 
 </html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['login_error'])) {
+    $error = $_SESSION['login_error'];
+    echo "<script>alert(" . json_encode($error) . ");</script>";
+    unset($_SESSION['login_error']);
+}
+?>
