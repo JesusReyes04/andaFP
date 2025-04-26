@@ -88,7 +88,7 @@ if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
 
             <div class="inputField">
                 <label for="password_confirm">Confirmar contraseña</label>
-                <input type="password" id="password_confirm" name="password_confirm" required>
+                <input type="password" id="password_confirm" name="password_confirm" required> <button>o</button>
             </div>
 
             <div class="inputField">
