@@ -45,14 +45,14 @@ $imageFileName = basename($profilePicturePath);
     <button class="close-btn" id="close-btn">&times;</button>
     <nav>
       <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Candidaturas</a></li>
+        <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
+        <li><a href="">Candidaturas</a></li>
         <li><a href="#">Tus estadísticas</a></li>
         <li><a href="#">Ayuda</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href="#">Sobre nosotros</a></li>
         <li><a href="#">Política de datos</a></li>
-        <li><a href="#">Cerrar sesión</a></li>
+        <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
       </ul>
     </nav>
   </aside>
