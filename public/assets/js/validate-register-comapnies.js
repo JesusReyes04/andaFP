@@ -83,7 +83,7 @@ function showPlaceSuggestions() {
     const suggestionsList = document.getElementById('placeSuggestionsList');
 
     const filteredSuggestions = placeSuggestions.filter(suggestion =>
-        suggestion.toLowerCase().includes(input.toLowerCase())        
+        suggestion.toLowerCase().includes(input.toLowerCase())
     );
 
     if (filteredSuggestions.length > 0 && input !== "") {
