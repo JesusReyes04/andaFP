@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showPlaceSuggestions() {
-    console.log('haciendo el intento de mostrar las sugerencias');
     const input = document.getElementById('province').value;
     const suggestionsList = document.getElementById('placeSuggestionsList');
 

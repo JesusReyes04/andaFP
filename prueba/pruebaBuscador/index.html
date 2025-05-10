@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <button id="menu-toggle" class="menu-btn">&#9776;</button>
+      <h1 class="andafp">andaFP</h1>
+      <img src="" alt="" class="profile-pic">
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="close-btn" id="close-btn">&times;</button>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Candidaturas</a></li>
+        <li><a href="#">Tus estadísticas</a></li>
+        <li><a href="#">Ayuda</a></li>
+        <li><a href="#">Ajustes</a></li>
+        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="#">Política de datos</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="form-container">
+      <form class="search-form" action="" method="get" id="searchForm">
+        <h2>Busque aquí sus ofertas</h2>
+        <div class="search-fields">
+          <div class="input-group">
+            <input type="text" id="searchInput" placeholder="Título formativo" autocomplete="off">
+            <ul id="suggestionsList" class="suggestions-list"></ul>
+          </div>
+          <div class="input-group">
+            <input type="text" id="placeInput" placeholder="Provincia" autocomplete="off">
+            <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+          </div>
+        </div>
+
+        <div class="advanced-fields hidden">
+          <div class="input-group">
+            <input type="text" id="city" name="city" placeholder="Ciudad">
+          </div>
+          <div class="input-group">
+            <select id="modality" name="modality">
+              <option value="" disabled selected>Modalidad</option>
+              <option value="onsite">Presencial</option>
+              <option value="remote">Remoto</option>
+              <option value="hybrid">Híbrido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="buttons-group">
+          <button type="button" id="toggleAdvanced">Búsqueda avanzada </button>
+          <button type="submit" id="submitForm">Buscar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>
+
+<script>
+  window.onload = function () {
+    const searchInput = document.getElementById('searchInput');
+    const placeInput = document.getElementById('placeInput');
+    const suggestionsList = document.getElementById('suggestionsList');
+    const placeSuggestionsList = document.getElementById('placeSuggestionsList');
+    const form = document.getElementById("searchForm");
+
+    searchInput.addEventListener('input', showSuggestions);
+    placeInput.addEventListener('input', showPlaceSuggestions);
+
+    searchInput.addEventListener('focus', () => {
+      placeSuggestionsList.style.display = 'none';
+      suggestionsList.style.display = 'block';
+    });
+
+    placeInput.addEventListener('focus', () => {
+      suggestionsList.style.display = 'none';
+      placeSuggestionsList.style.display = 'block';
+    });
+
+    form.addEventListener('submit', function (event) {
+      validateInputsValues(event, placeInput, searchInput);
+    });
+
+    const toggle = document.getElementById('toggleAdvanced');
+    const advancedFields = document.querySelector('.advanced-fields');
+    
+    toggle.addEventListener('click', () => {
+      advancedFields.classList.toggle('hidden');
+      toggle.textContent = advancedFields.classList.contains('hidden')
+        ? 'Búsqueda avanzada ↓'
+        : 'Búsqueda avanzada ↑';
+    });
+  };
+</script>

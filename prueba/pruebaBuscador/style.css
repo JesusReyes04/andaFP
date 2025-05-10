@@ -1,3 +1,4 @@
+/* === RESET GENERAL === */
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -28,11 +29,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Espaciado entre izquierda y derecha */
   position: relative;
 }
 
-/* Botón Menú */
 .menu-btn {
   font-size: 1.5rem;
   background: none;
@@ -41,24 +40,20 @@ body {
   cursor: pointer;
 }
 
-/* Texto andaFP */
 .andafp {
   font-size: 1.5rem;
   font-weight: bold;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  /* CENTRARLO perfecto */
 }
 
-/* Imagen de perfil */
 .profile-pic {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   object-fit: cover;
   background-color: #f9fafb;
-  /* Color de fondo provisional */
 }
 
 /* === SIDEBAR === */
@@ -83,7 +78,6 @@ body {
 
 .sidebar nav ul {
   list-style: none;
-  padding: 0;
   margin-top: 2rem;
 }
 
@@ -131,147 +125,125 @@ body {
   }
 }
 
-/* === FORMULARIO DE OFERTAS === */
-.form-container {
+/* === FORMULARIO DE BÚSQUEDA === */
+.search-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 1rem;
-}
-
-.offers-form {
-  background-color: #ffffff;
-  padding: 2.5rem 2rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  flex-direction: column;
+  gap: 1.5rem;
   max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-fields,
+.advanced-fields {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.offers-form h2 {
-  font-size: 1.75rem;
-  color: #111827;
-  text-align: center;
-  margin-bottom: 1rem;
+.advanced-fields.hidden {
+  display: none;
 }
 
-.inputField {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inputField label {
-  font-weight: 600;
-  color: #374151;
-  font-size: 0.95rem;
-}
-
-.inputField input,
-.inputField textarea,
-.inputField select {
-  padding: 0.75rem;
-  font-size: 1rem;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  transition: border-color 0.3s, background-color 0.3s;
-  resize: vertical;
-}
-
-.inputField input:focus,
-.inputField textarea:focus,
-.inputField select:focus {
-  border-color: #006331;
-  background-color: #ffffff;
-  outline: none;
-}
-
-.place-wrapper {
+.input-group {
   position: relative;
 }
 
-.place-wrapper input {
+input[type="text"],
+select {
   width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s;
 }
 
-textarea {
-  font-family: 'Seoge UI', sans-serif;
+input[type="text"]:focus,
+select:focus {
+  border-color: #006331;
+  outline: none;
 }
 
+#searchInput:focus {
+  border-color: #006331;
+}
+
+#placeInput:focus {
+  outline: #006331 solid 1px;
+}
+
+.buttons-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+#toggleAdvanced,
+#submitForm {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#toggleAdvanced {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+#toggleAdvanced:hover {
+  background-color: #d1d5db;
+}
+
+#submitForm {
+  background-color: #006331;
+  color: white;
+}
+
+#submitForm:hover {
+  background-color: #008140;
+}
+
+/* === SUGERENCIAS === */
 .suggestions-list {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
-  list-style: none;
+  right: 0;
+  z-index: 10;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
   background-color: white;
   border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: none;
-  z-index: 100;
 }
 
 .suggestions-list li {
   padding: 0.75rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s ease;
 }
 
 .suggestions-list li:hover {
   background-color: #f3f4f6;
 }
 
-.buttons-fomr {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.deleteInputsValue {
-  background-color: transparent;
-  color: #dc2626;
-  border: 1px solid #dc2626;
-  padding: 0.6rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.deleteInputsValue:hover {
-  background-color: #dc2626;
-  color: white;
-}
-
-.submit-btn {
-  background-color: #006331;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  flex-grow: 1;
-  transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.submit-btn:hover {
-  background-color: #009a4d;
-  transform: scale(1.02);
-}
-
-.modality-options:hover {
-  background-color: #006331;
-}
-
+/* === ERRORES === */
 .error-message {
   background: red;
   color: white;
@@ -285,15 +257,9 @@ textarea {
   display: none;
 }
 
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 1em;
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 10px;
-  z-index: 9999;
-  display: none;
+/* === OPCIONAL: WRAPPERS ESPECÍFICOS (si los usas en el HTML) === */
+.search-wrapper,
+.place-wrapper {
+  position: relative;
+  width: 100%;
 }

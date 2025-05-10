@@ -41,7 +41,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <div class="inputField">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" autocomplete="new-password" required>
             </div>
 
             <div class="inputField">

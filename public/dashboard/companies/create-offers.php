@@ -28,9 +28,7 @@ $imageFileName = basename($profilePicturePath);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>andaFP</title>
-    <link rel="stylesheet" href="/andaFP/public/assets/css/companies-dashboard.css">
     <link rel="stylesheet" href="/andaFP/public/assets/css/create-offers-form.css">
-    <script src="/andaFP/public/assets/js/companies-dashboard.js" defer></script>
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -61,12 +59,12 @@ $imageFileName = basename($profilePicturePath);
 
     <main class="main-content">
         <div class="form-container">
-            <form action="" class="offers-form">
+            <form class="offers-form" method="post" id="offers-form" action="/andaFP/src/backend/sections/create-offers.php">
                 <h2 id="title">Publica tu oferta aquí</h2>
 
                 <div class="inputField">
-                    <label for="title">Título</label>
-                    <input type="text" id="title" name="title" required autocomplete="off">
+                    <label for="offer-title">Título</label>
+                    <input type="text" id="offer-title" name="offer-title" required autocomplete="off">
                 </div>
 
                 <div class="inputField">
@@ -112,7 +110,7 @@ $imageFileName = basename($profilePicturePath);
                     </select>
                 </div>
                 <div class="buttons-fomr">
-                    <button class="deleteInputsValue">Limpiar datos</button>
+                    <button class="deleteInputsValue" id="deleteInputsValue">Limpiar datos</button>
                     <input type="submit" value="Publicar oferta" class="submit-btn">
                 </div>
             </form>
@@ -125,9 +123,23 @@ $imageFileName = basename($profilePicturePath);
 
     <script src="/andaFP/public/assets/js/create-offers-form.js"></script>
     <script>
-        const provinceInput = document.getElementById('province');
-        provinceInput.addEventListener('input', showPlaceSuggestions);
+        document.addEventListener('DOMContentLoaded', function () {
+            const provinceInput = document.getElementById('province');
+            provinceInput.addEventListener('input', showPlaceSuggestions);
+        });
     </script>
 </body>
 
 </html>
+<?php
+if (isset($_SESSION['register_success'])) {
+    echo '<script>document.addEventListener("DOMContentLoaded", function() {
+        const successDiv = document.createElement("div");
+        successDiv.innerText = "' . addslashes($_SESSION['register_success']) . '";
+        successDiv.classList.add("success-message");
+        document.body.appendChild(successDiv);
+        setTimeout(() => successDiv.remove(), 3000);
+    });</script>';
+    unset($_SESSION['register_success']);
+}
+?>

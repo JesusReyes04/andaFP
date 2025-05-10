@@ -1,5 +1,7 @@
+let placeSuggestions;
+
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector(".offers-form");
+  const form = document.getElementById("offers-form");
 
   fetch("/andaFP/public/assets/data/suggestions.json")
     .then((response) => {
@@ -27,11 +29,29 @@ document.addEventListener("DOMContentLoaded", function () {
       showError(errorMessage);
     }
   });
+
+  document
+    .getElementById("deleteInputsValue")
+    .addEventListener("click", function () {
+      const inputs = document.querySelectorAll(
+        "#offers-form input[type='text'], #offers-form textarea, #offers-form select"
+      );
+      inputs.forEach((input) => {
+        if (input.type !== "submit") {
+          input.value = ""; // Limpia el valor de los inputs
+        }
+      });
+    });
+
+  setTimeout(() => {
+    const msg = document.querySelector(".success-message");
+    if (msg) msg.style.display = "none";
+  }, 3000); // 3 segundos
 });
 
 // Validaciones del formulario: devuelve un string con el error o vacío si todo OK
 function getFormValidationErrors() {
-  const title = document.getElementById("title").value.trim();
+  const title = document.getElementById("offer-title").value.trim();
   const description = document.getElementById("description").value.trim();
   const province = document.getElementById("province").value.trim();
   const city = document.getElementById("city").value.trim();
@@ -39,6 +59,17 @@ function getFormValidationErrors() {
   const startDate = document.getElementById("startDate").value;
   const schedule = document.getElementById("schedule").value.trim();
   const modality = document.getElementById("modality").value;
+
+  console.log({
+    title,
+    description,
+    province,
+    city,
+    location,
+    startDate,
+    schedule,
+    modality,
+  });
 
   if (!title || title.length < 5) {
     return "El título debe tener al menos 5 caracteres.";
@@ -48,8 +79,11 @@ function getFormValidationErrors() {
     return "La descripción debe tener al menos 10 caracteres.";
   }
 
-  if (!province) {
-    return "La provincia es obligatoria.";
+  if (
+    !province ||
+    !placeSuggestions.some((p) => p.toLowerCase() === province.toLowerCase())
+  ) {
+    return "La provincia es obligatoria y debe ser una de las sugerencias.";
   }
 
   if (!city) {
@@ -125,3 +159,15 @@ function showError(mensaje) {
     errorDiv.remove();
   }, 3000);
 }
+
+const toggleBtn = document.getElementById("menu-toggle");
+const closeBtn = document.getElementById("close-btn");
+const sidebar = document.getElementById("sidebar");
+
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.add("open");
+});
+
+closeBtn.addEventListener("click", () => {
+  sidebar.classList.remove("open");
+});
