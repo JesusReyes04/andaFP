@@ -263,3 +263,8 @@ select:focus {
   position: relative;
   width: 100%;
 }
+
+#welcome-msg{
+  text-align: center;
+  font-size: 1.5rem;
+}

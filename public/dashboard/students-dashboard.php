@@ -11,20 +11,75 @@ if (!$studentId) {
 }
 
 // obtener ruta de la imagen
-$query = $conection->prepare("SELECT profile_picture FROM students WHERE id = ?");
+$query = $conection->prepare("SELECT profile_picture, username FROM students WHERE id = ?");
 $query->bind_param("i", $studentId);
 $query->execute();
-$query->bind_result($profilePicturePath);
+$query->bind_result($profilePicturePath, $username);
 $query->fetch();
 $query->close();
 
 // obtener solo el nombre del archivo
 $imageFileName = basename($profilePicturePath);
 
+$offers = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $title = $_POST['title'] ?? '';
+  $province = $_POST['province'] ?? '';
+  $city = $_POST['city'] ?? '';
+  $modality = $_POST['modality'] ?? '';
+
+  $query = "SELECT offers.*, 
+            companies.profile_picture AS company_profile_picture, 
+            companies.name AS company_name 
+            FROM offers 
+            INNER JOIN companies ON offers.company_id = companies.id 
+            WHERE 1=1";
+
+  $params = [];
+  $types = "";
+
+  if (!empty($title)) {
+    $query .= " AND offers.title LIKE ?";
+    $params[] = "%$title%";
+    $types .= "s";
+  }
+
+  if (!empty($province)) {
+    $query .= " AND offers.province LIKE ?";
+    $params[] = "%$province%";
+    $types .= "s";
+  }
+
+  if (!empty($city)) {
+    $query .= " AND offers.city LIKE ?";
+    $params[] = "%$city%";
+    $types .= "s";
+  }
+
+  if (!empty($modality)) {
+    $query .= " AND offers.modality = ?";
+    $params[] = $modality;
+    $types .= "s";
+  }
+
+  $stmt = $conection->prepare($query);
+
+  if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+  }
+
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $offers = $result->fetch_all(MYSQLI_ASSOC);
+  $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +93,7 @@ $imageFileName = basename($profilePicturePath);
     <div class="header-container">
       <button id="menu-toggle" class="menu-btn">&#9776;</button>
       <h1 class="andafp">andaFP</h1>
-      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName);?>" alt="" class="profile-pic">
+      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
     </div>
   </header>
 
@@ -59,9 +114,101 @@ $imageFileName = basename($profilePicturePath);
   </aside>
 
   <main class="main-content">
-    <h2>Contenido Principal</h2>
-    <p>Este es un ejemplo de contenido con una sidebar a la izquierda y el nombre andaFP a la derecha del header.</p>
+    <div class="form-container">
+      <h2 id="welcome-msg">Bienvenido <?php echo $username ?>, aquí comienza tu camino</h2>
+      <form class="search-form" action="" method="post" id="searchForm">
+        <h2>Busque aquí sus ofertas</h2>
+        <div class="search-fields">
+          <div class="input-group">
+            <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
+            <ul id="suggestionsList" class="suggestions-list"></ul>
+          </div>
+          <div class="input-group">
+            <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
+            <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+          </div>
+        </div>
+
+        <div class="advanced-fields hidden">
+          <div class="input-group">
+            <input type="text" id="city" name="city" placeholder="Ciudad">
+          </div>
+          <div class="input-group">
+            <select id="modality" name="modality">
+              <option value="" disabled selected>Modalidad</option>
+              <option value="onsite">Presencial</option>
+              <option value="remote">Remoto</option>
+              <option value="hybrid">Híbrido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="buttons-group">
+          <button type="button" id="toggleAdvanced">Búsqueda avanzada</button>
+          <button type="submit" id="submitForm">Buscar</button>
+        </div>
+      </form>
+    </div>
+    <?php if (!empty($offers)): ?>
+      <div class="card-container">
+        <?php foreach ($offers as $offer): ?>
+          <div class="card">
+            <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars(basename($offer['company_profile_picture'])); ?>" class="card-img">
+            <div class="card-content">
+              <div class="card-text">
+                <p class="card-title"><?php echo htmlspecialchars($offer['title']); ?></p>
+                <p class="card-description"><?php echo htmlspecialchars($offer['description']); ?></p>
+                <div>
+                  <span id="province"><?= htmlspecialchars($offer['province']) ?></span>
+                  <span>|</span>
+                  <span id="city"><?= htmlspecialchars($offer['city']) ?></span>
+                </div>
+              </div>
+              <div class="card-buttons-container">
+                <div class="card-buttons">
+                  <a class="btn">Ver más</a>
+                  <button class="btn">Aplicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    <?php endforeach; ?>
+  <?php endif; ?>
   </main>
 </body>
 
 </html>
+<script>
+  window.onload = function() {
+    const searchInput = document.getElementById('searchInput');
+    const placeInput = document.getElementById('placeInput');
+    const suggestionsList = document.getElementById('suggestionsList');
+    const placeSuggestionsList = document.getElementById('placeSuggestionsList');
+    const form = document.getElementById("searchForm");
+
+    searchInput.addEventListener('input', showSuggestions);
+    placeInput.addEventListener('input', showPlaceSuggestions);
+
+    searchInput.addEventListener('focus', () => {
+      placeSuggestionsList.style.display = 'none';
+      suggestionsList.style.display = 'block';
+    });
+
+    placeInput.addEventListener('focus', () => {
+      suggestionsList.style.display = 'none';
+      placeSuggestionsList.style.display = 'block';
+    });
+
+    form.addEventListener('submit', function(event) {
+      validateInputsValues(event, placeInput, searchInput);
+    });
+
+    const toggle = document.getElementById('toggleAdvanced');
+    const advancedFields = document.querySelector('.advanced-fields');
+
+    toggle.addEventListener('click', () => {
+      advancedFields.classList.toggle('hidden');
+    });
+  };
+</script>

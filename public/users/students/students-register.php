@@ -83,12 +83,12 @@ if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
 
             <div class="inputField">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required autocomplete="off">
+                <input type="password" id="password" name="password" required autocomplete="new-password">
             </div>
 
             <div class="inputField">
                 <label for="password_confirm">Confirmar contraseña</label>
-                <input type="password" id="password_confirm" name="password_confirm" required> <button>o</button>
+                <input type="password" id="password_confirm" name="password_confirm" required autocomplete="new-password">
             </div>
 
             <div class="inputField">
