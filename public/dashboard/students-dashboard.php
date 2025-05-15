@@ -63,6 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $types .= "s";
   }
 
+  $query .= " ORDER BY offers.created_at DESC LIMIT 10";
+
   $stmt = $conection->prepare($query);
 
   if (!empty($params)) {
@@ -152,29 +154,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php if (!empty($offers)): ?>
       <div class="card-container">
         <?php foreach ($offers as $offer): ?>
-          <div class="card">
-            <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars(basename($offer['company_profile_picture'])); ?>" class="card-img">
-            <div class="card-content">
-              <div class="card-text">
-                <p class="card-title"><?php echo htmlspecialchars($offer['title']); ?></p>
-                <p class="card-description"><?php echo htmlspecialchars($offer['description']); ?></p>
-                <div>
-                  <span id="province"><?= htmlspecialchars($offer['province']) ?></span>
-                  <span>|</span>
-                  <span id="city"><?= htmlspecialchars($offer['city']) ?></span>
-                </div>
+          <div class="job-card">
+            <div class="job-top">
+              <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars(basename($offer['company_profile_picture'])); ?>" class="job-img">
+              <div class="job-header">
+                <h3 class="job-title"><?php echo htmlspecialchars($offer['title']); ?></h3>
+                <p class="job-company"><?php echo htmlspecialchars($offer['company_name']); ?></p>
               </div>
-              <div class="card-buttons-container">
-                <div class="card-buttons">
-                  <a class="btn">Ver más</a>
-                  <button class="btn">Aplicar</button>
-                </div>
+            </div>
+
+            <div class="job-meta">
+              <span id="job-ubication"><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($offer['city']) ?>, <?= htmlspecialchars($offer['province']) ?></span>
+              <span id="job-modality"><strong class="job-data">Modalidad:</strong> Presencial</span>
+              <span id="job-duration"><strong class="job-data">Duración:</strong> 6 meses</span>
+            </div>
+            <p class="job-description"><?php echo htmlspecialchars($offer['description']); ?></p>
+            <div class="job-footer">
+              <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
+              <div class="job-actions">
+                <a href="#" class="btn">Ver más</a>
+                <button class="btn">Aplicar</button>
               </div>
             </div>
           </div>
-      </div>
-    <?php endforeach; ?>
-  <?php endif; ?>
+        <?php endforeach; ?>
+      <?php endif; ?>
   </main>
 </body>
 
