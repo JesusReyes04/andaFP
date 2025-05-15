@@ -165,14 +165,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="job-meta">
               <span id="job-ubication"><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($offer['city']) ?>, <?= htmlspecialchars($offer['province']) ?></span>
-              <span id="job-modality"><strong class="job-data">Modalidad:</strong> Presencial</span>
-              <span id="job-duration"><strong class="job-data">Duración:</strong> 6 meses</span>
+              <span id="job-modality"><strong class="job-data">Modalidad:</strong> <?= htmlspecialchars($offer['modality']) ?></span>
             </div>
             <p class="job-description"><?php echo htmlspecialchars($offer['description']); ?></p>
             <div class="job-footer">
               <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
               <div class="job-actions">
-                <a href="#" class="btn">Ver más</a>
+                <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn">Ver más</a>
                 <button class="btn">Aplicar</button>
               </div>
             </div>

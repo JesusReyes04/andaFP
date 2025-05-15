@@ -123,7 +123,7 @@ $imageFileName = basename($profilePicturePath);
 
     <script src="/andaFP/public/assets/js/create-offers-form.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const provinceInput = document.getElementById('province');
             provinceInput.addEventListener('input', showPlaceSuggestions);
         });
