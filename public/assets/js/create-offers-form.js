@@ -1,23 +1,34 @@
 let placeSuggestions;
+let suggestions;
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("offers-form");
 
   fetch("/andaFP/public/assets/data/suggestions.json")
     .then((response) => {
-      if (!response.ok) throw new Error("Error al cargar sugerencias");
+      if (!response.ok) {
+        showError("No se pudo cargar las sugerencias");
+        throw new Error("Error al cargar el archivo JSON");
+      }
       return response.json();
     })
     .then((data) => {
-      if (!data.placeSuggestions) {
-        throw new Error("Formato JSON inválido");
+      if (!data.suggestions || !data.placeSuggestions) {
+        showError("Formato de JSON inválido");
+        throw new Error("Formato de JSON inválido");
       }
+
+      suggestions = data.suggestions;
       placeSuggestions = data.placeSuggestions;
     })
     .catch((error) => {
       console.error("Error:", error);
-      showError("Error cargando sugerencias. Recargue la página.");
-      document.getElementById("province").placeholder =
+      showError(
+        "No se pudieron cargar las sugerencias. Intente recargar la página."
+      );
+      document.getElementById("searchInput").placeholder =
+        "Error cargando datos...";
+      document.getElementById("placeInput").placeholder =
         "Error cargando datos...";
     });
 
@@ -49,6 +60,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 3000); // 3 segundos
 });
 
+function showSuggestions() {
+  const input = document.getElementById("specialty").value;
+  const suggestionsList = document.getElementById("suggestionsList");
+
+  const filteredSuggestions = suggestions.filter((suggestion) =>
+    suggestion.toLowerCase().includes(input.toLowerCase())
+  );
+
+  if (filteredSuggestions.length > 0 && input !== "") {
+    suggestionsList.innerHTML = filteredSuggestions
+      .map(
+        (suggestion) =>
+          `<li onclick="selectSuggestion('${suggestion}', 'specialty', 'suggestionsList')">${suggestion}</li>`
+      )
+      .join("");
+    suggestionsList.style.display = "block";
+  } else {
+    suggestionsList.innerHTML = "";
+    suggestionsList.style.display = "none";
+  }
+}
+
 // Validaciones del formulario: devuelve un string con el error o vacío si todo OK
 function getFormValidationErrors() {
   const title = document.getElementById("offer-title").value.trim();
@@ -59,6 +92,7 @@ function getFormValidationErrors() {
   const startDate = document.getElementById("startDate").value;
   const schedule = document.getElementById("schedule").value.trim();
   const modality = document.getElementById("modality").value;
+  const requiredSpecialty = document.getElementById("specialty").value;
 
   console.log({
     title,

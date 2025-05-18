@@ -151,3 +151,23 @@ function validateInputsValues(e, placeInput, searchInput) {
     return;
   }
 }
+
+function getURLParameter(placeInput, searchInput) {
+  const urlParams = new URLSearchParams();
+
+  const title = searchInput.value.trim();
+  const place = placeInput.value.trim();
+
+  if (title) {
+    urlParams.append("title", title);
+  }
+  if (place) {
+    urlParams.append("place", place);
+  }
+
+  const url = "http://localhost/andaFP/public/results.php" 
+  + (params.toString() ? "?" 
+  + params.toString() : "");
+
+  window.location.href = url;
+}

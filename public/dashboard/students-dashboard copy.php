@@ -20,63 +20,6 @@ $query->close();
 
 // obtener solo el nombre del archivo
 $imageFileName = basename($profilePicturePath);
-
-$offers = [];
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $title = $_POST['title'] ?? '';
-  $province = $_POST['province'] ?? '';
-  $city = $_POST['city'] ?? '';
-  $modality = $_POST['modality'] ?? '';
-
-  $query = "SELECT offers.*, 
-            companies.profile_picture AS company_profile_picture, 
-            companies.name AS company_name 
-            FROM offers 
-            INNER JOIN companies ON offers.company_id = companies.id 
-            WHERE 1=1";
-
-  $params = [];
-  $types = "";
-
-  if (!empty($title)) {
-    $query .= " AND offers.title LIKE ?";
-    $params[] = "%$title%";
-    $types .= "s";
-  }
-
-  if (!empty($province)) {
-    $query .= " AND offers.province LIKE ?";
-    $params[] = "%$province%";
-    $types .= "s";
-  }
-
-  if (!empty($city)) {
-    $query .= " AND offers.city LIKE ?";
-    $params[] = "%$city%";
-    $types .= "s";
-  }
-
-  if (!empty($modality)) {
-    $query .= " AND offers.modality = ?";
-    $params[] = $modality;
-    $types .= "s";
-  }
-
-  $query .= " ORDER BY offers.created_at DESC LIMIT 10";
-
-  $stmt = $conection->prepare($query);
-
-  if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
-  }
-
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $offers = $result->fetch_all(MYSQLI_ASSOC);
-  $stmt->close();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="/andaFP/public/assets/css/students-dashboard.css">
-  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
+  <link rel="stylesheet" href="/andaFP/public/assets/css/rework-dashboard.css">
+  <script src="/andaFP/public/assets/js/students-dashboard-rebuild.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -116,42 +59,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </nav>
   </aside>
 
-  <main class="main-content">
-    <div class="form-container">
-      <h2 id="welcome-msg">Bienvenido <?php echo $username ?>, aquí comienza tu camino</h2>
-      <form class="search-form" action="" method="post" id="searchForm">
-        <h2>Busque aquí sus ofertas</h2>
-        <div class="search-fields">
-          <div class="input-group">
-            <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
-            <ul id="suggestionsList" class="suggestions-list"></ul>
-          </div>
-          <div class="input-group">
-            <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
-            <ul id="placeSuggestionsList" class="suggestions-list"></ul>
-          </div>
+  <div class="form-container">
+    <h2 id="welcome-msg">Bienvenido <?php echo $username ?>, aquí comienza tu camino</h2>
+    <div class="search-form" id="searchForm">
+      <h2>Buscar las mejores ofertas</h2>
+      <div class="search-fields">
+        <div class="input-group">
+          <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
+          <ul id="suggestionsList" class="suggestions-list"></ul>
         </div>
-
-        <div class="advanced-fields hidden">
-          <div class="input-group">
-            <input type="text" id="city" name="city" placeholder="Ciudad">
-          </div>
-          <div class="input-group">
-            <select id="modality" name="modality">
-              <option value="" disabled selected>Modalidad</option>
-              <option value="onsite">Presencial</option>
-              <option value="remote">Remoto</option>
-              <option value="hybrid">Híbrido</option>
-            </select>
-          </div>
+        <div class="input-group">
+          <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
+          <ul id="placeSuggestionsList" class="suggestions-list"></ul>
         </div>
-
-        <div class="buttons-group">
-          <button type="button" id="toggleAdvanced">Búsqueda avanzada</button>
-          <button type="submit" id="submitForm">Buscar</button>
-        </div>
-      </form>
+        <button id="submitForm">Buscar</button>
+      </div>
     </div>
+  </div>
+
+  <main class="main-content">
     <?php if (!empty($offers)): ?>
       <div class="card-container">
         <?php foreach ($offers as $offer): ?>
@@ -204,15 +130,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       placeSuggestionsList.style.display = 'block';
     });
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('click', function(event) {
       validateInputsValues(event, placeInput, searchInput);
-    });
-
-    const toggle = document.getElementById('toggleAdvanced');
-    const advancedFields = document.querySelector('.advanced-fields');
-
-    toggle.addEventListener('click', () => {
-      advancedFields.classList.toggle('hidden');
     });
   };
 </script>

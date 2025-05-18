@@ -27,9 +27,10 @@ $imageFileName = basename($profilePicturePath);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/companies-dashboard.css">
   <script src="/andaFP/public/assets/js/companies-dashboard.js" defer></script>
+  <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -37,7 +38,7 @@ $imageFileName = basename($profilePicturePath);
     <div class="header-container">
       <button id="menu-toggle" class="menu-btn">&#9776;</button>
       <h1 class="andafp">andaFP</h1>
-      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName);?>" alt="" class="profile-pic">
+      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
     </div>
   </header>
 

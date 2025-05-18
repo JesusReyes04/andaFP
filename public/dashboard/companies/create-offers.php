@@ -82,6 +82,14 @@ $imageFileName = basename($profilePicturePath);
                 </div>
 
                 <div class="inputField">
+                    <label for="specialty">Especialidad requerida</label>
+                    <div class="place-wrapper">
+                        <input type="text" id="specialty" name="specialty" autocomplete="off" required>
+                        <ul id="suggestionsList" class="suggestions-list"></ul>
+                    </div>
+                </div>
+
+                <div class="inputField">
                     <label for="city">Ciudad</label>
                     <input type="text" id="city" name="city" required>
                 </div>
@@ -125,7 +133,10 @@ $imageFileName = basename($profilePicturePath);
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const provinceInput = document.getElementById('province');
+            const specialtyInput = document.getElementById('specialty');
+
             provinceInput.addEventListener('input', showPlaceSuggestions);
+            specialtyInput.addEventListener('input', showSuggestions);
         });
     </script>
 </body>
