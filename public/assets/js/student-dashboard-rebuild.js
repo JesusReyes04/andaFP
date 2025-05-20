@@ -166,8 +166,7 @@ function getURLParameter(placeInput, searchInput) {
   }
 
   const url = "http://localhost/andaFP/public/results.php" 
-  + (params.toString() ? "?" 
-  + params.toString() : "");
+    + (urlParams.toString() ? "?" + urlParams.toString() : "");
 
-  window.location.href = url;
+  return url;
 }

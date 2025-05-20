@@ -10,62 +10,134 @@ if (!$studentId) {
   exit();
 }
 
-// obtener ruta de la imagen
-$query = $conection->prepare("SELECT profile_picture, username FROM students WHERE id = ?");
-$query->bind_param("i", $studentId);
-$query->execute();
-$query->bind_result($profilePicturePath, $username);
-$query->fetch();
-$query->close();
-
-// obtener solo el nombre del archivo
-$imageFileName = basename($profilePicturePath);
-
-// obtener parámetros por GET
-$title = $_GET['title'] ?? '';
-$province = $_GET['province'] ?? '';
-
+// get params form post
 $offers = [];
 
-// construir consulta base
-$sql = "SELECT o.id, o.title, o.description, o.city, o.province, o.modality, o.created_at,
-               c.name AS company_name, c.profile_picture AS company_profile_picture
-        FROM offers o
-        JOIN companies c ON o.company_id = c.id
-        WHERE 1=1";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $title = $_POST['title'] ?? '';
+  $province = $_POST['province'] ?? '';
+  $city = $_POST['city'] ?? '';
+  $modality = $_POST['modality'] ?? '';
+  $active = "open";
 
-$params = [];
-$types = "";
+  $query = "SELECT offers.*, 
+            companies.profile_picture AS company_profile_picture, 
+            companies.name AS company_name 
+            FROM offers 
+            INNER JOIN companies ON offers.company_id = companies.id 
+            WHERE 1=1";
 
-// añadir condiciones si existen
-if (!empty($title)) {
-    $sql .= " AND o.title LIKE ?";
-    $params[] = '%' . $title . '%';
+  $params = [];
+  $types = "";
+
+  if (!empty($title)) {
+    $query .= " AND offers.required_specialty LIKE ?";
+    $params[] = "%$title%";
     $types .= "s";
-}
+  }
 
-if (!empty($province)) {
-    $sql .= " AND o.province LIKE ?";
-    $params[] = '%' . $province . '%';
+  if (!empty($province)) {
+    $query .= " AND offers.province LIKE ?";
+    $params[] = "%$province%";
     $types .= "s";
-}
+  }
 
-$sql .= " ORDER BY o.created_at DESC";
+  if (!empty($city)) {
+    $query .= " AND offers.city LIKE ?";
+    $params[] = "%$city%";
+    $types .= "s";
+  }
 
-$stmt = $conection->prepare($sql);
+  if (!empty($modality)) {
+    $query .= " AND offers.modality = ?";
+    $params[] = $modality;
+    $types .= "s";
+  }
 
-if (!empty($params)) {
+  $query .= " AND offers.status = ?";
+  $params[] = $active;
+  $types .= "s";
+
+
+  $query .= " ORDER BY offers.created_at DESC";
+
+  $stmt = $conection->prepare($query);
+
+  if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
+  }
+
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $offers = $result->fetch_all(MYSQLI_ASSOC);
+  $stmt->close();
+} else {
+  // get params form GET
+  $title = $_GET['title'] ?? '';
+  $province = $_GET['place'] ?? '';
+  $city = $_GET['city'] ?? '';
+  $modality = $_GET['modality'] ?? '';
+  $active = "open";
+
+
+  $offers = [];
+
+  // construir consulta base
+  $query = "SELECT offers.*, 
+            companies.profile_picture AS company_profile_picture, 
+            companies.name AS company_name 
+            FROM offers 
+            INNER JOIN companies ON offers.company_id = companies.id 
+            WHERE 1=1";
+
+  $params = [];
+  $types = "";
+
+  // añadir condiciones si existen
+  if (!empty($title)) {
+    $query .= " AND offers.required_specialty LIKE ?";
+    $params[] = "%$title%";
+    $types .= "s";
+  }
+
+  if (!empty($province)) {
+    $query .= " AND offers.province LIKE ?";
+    $params[] = "%$province%";
+    $types .= "s";
+  }
+
+  if (!empty($city)) {
+    $query .= " AND offers.city LIKE ?";
+    $params[] = "%$city%";
+    $types .= "s";
+  }
+
+  if (!empty($modality)) {
+    $query .= " AND offers.modality = ?";
+    $params[] = $modality;
+    $types .= "s";
+  }
+
+  $query .= " AND offers.status = ?";
+  $params[] = $active;
+  $types .= "s";
+
+
+  $query .= " ORDER BY offers.created_at DESC";
+
+  $stmt = $conection->prepare($query);
+
+  if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+  }
+
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $offers = $result->fetch_all(MYSQLI_ASSOC);
+  $stmt->close();
 }
 
-$stmt->execute();
-$result = $stmt->get_result();
 
-while ($row = $result->fetch_assoc()) {
-    $offers[] = $row;
-}
-
-$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -74,16 +146,19 @@ $stmt->close();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/rework-dashboard.css">
   <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
   <header class="header">
     <div class="header-container">
-      <button id="menu-toggle" class="menu-btn">&#9776;</button>
+      <button id="menu-toggle" class="menu-btn"><span class="material-symbols-outlined">
+          filter_alt
+        </span></button>
       <h1 class="andafp">andaFP</h1>
       <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
     </div>
@@ -93,37 +168,54 @@ $stmt->close();
     <button class="close-btn" id="close-btn">&times;</button>
     <nav>
       <ul>
-        <li><a href="/andaFP/public/dashboard/students-dashboard.php">Inicio</a></li>
-        <li><a href="#">Candidaturas</a></li>
-        <li><a href="#">Tus estadísticas</a></li>
-        <li><a href="#">Ayuda</a></li>
-        <li><a href="#">Ajustes</a></li>
-        <li><a href="#">Sobre nosotros</a></li>
-        <li><a href="#">Política de datos</a></li>
-        <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
+        <li>filter</li>
       </ul>
     </nav>
   </aside>
 
-  <div class="form-container">
-    <h2 id="welcome-msg">Bienvenido <?php echo $username ?>, aquí comienza tu camino</h2>
-    <div class="search-form" id="searchForm">
-      <h2>Buscar las mejores ofertas</h2>
-      <div class="search-fields">
-        <div class="input-group">
-          <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
-          <ul id="suggestionsList" class="suggestions-list"></ul>
-        </div>
-        <div class="input-group">
-          <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
-          <ul id="placeSuggestionsList" class="suggestions-list"></ul>
-        </div>
-        <button id="submitForm">Buscar</button>
-      </div>
-    </div>
-  </div>
-
   <main class="main-content">
+    <div class="form-container">
+      <form class="search-form" action="" method="post" id="searchForm">
+        <h2>Busque aquí sus ofertas</h2>
+        <div class="search-fields">
+          <div class="input-group">
+            <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
+            <ul id="suggestionsList" class="suggestions-list"></ul>
+          </div>
+          <div class="input-group">
+            <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
+            <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+          </div>
+        </div>
+
+        <div class="advanced-fields hidden">
+          <div class="input-group">
+            <input type="text" id="city" name="city" placeholder="Ciudad">
+          </div>
+          <div class="input-group">
+            <select id="modality" name="modality">
+              <option value="" disabled selected>Modalidad</option>
+              <option value="onsite">Presencial</option>
+              <option value="remote">Remoto</option>
+              <option value="hybrid">Híbrido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="buttons-group">
+          <button type="button" id="toggleAdvanced">Búsqueda avanzada</button>
+          <button type="submit" id="submitForm">Buscar</button>
+        </div>
+      </form>
+    </div>
+
     <?php if (!empty($offers)): ?>
       <div class="card-container">
         <?php foreach ($offers as $offer): ?>
@@ -144,7 +236,7 @@ $stmt->close();
             <div class="job-footer">
               <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
               <div class="job-actions">
-                <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn">Ver más</a>
+                <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn" target="_blank">Ver más</a>
                 <button class="btn">Aplicar</button>
               </div>
             </div>
@@ -178,6 +270,13 @@ $stmt->close();
 
     form.addEventListener('click', function(event) {
       validateInputsValues(event, placeInput, searchInput);
+    });
+    
+    const toggle = document.getElementById('toggleAdvanced');
+    const advancedFields = document.querySelector('.advanced-fields');
+    toggle.addEventListener('click', () => {
+      advancedFields.classList.toggle('hidden');
+      toggle.textContent = advancedFields.classList.contains('hidden') ? 'Búsqueda avanzada' : 'Ocultar búsqueda avanzada';
     });
   };
 </script>

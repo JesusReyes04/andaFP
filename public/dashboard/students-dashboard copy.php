@@ -28,9 +28,9 @@ $imageFileName = basename($profilePicturePath);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/rework-dashboard.css">
-  <script src="/andaFP/public/assets/js/students-dashboard-rebuild.js" defer></script>
+  <script src="/andaFP/public/assets/js/student-dashboard-rebuild.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -116,6 +116,7 @@ $imageFileName = basename($profilePicturePath);
     const suggestionsList = document.getElementById('suggestionsList');
     const placeSuggestionsList = document.getElementById('placeSuggestionsList');
     const form = document.getElementById("searchForm");
+    const submitButton = document.getElementById('submitForm');
 
     searchInput.addEventListener('input', showSuggestions);
     placeInput.addEventListener('input', showPlaceSuggestions);
@@ -130,8 +131,10 @@ $imageFileName = basename($profilePicturePath);
       placeSuggestionsList.style.display = 'block';
     });
 
-    form.addEventListener('click', function(event) {
+    submitButton.addEventListener('click', function(event) {
+      let redirectUrl = getURLParameter(placeInput, searchInput);
       validateInputsValues(event, placeInput, searchInput);
+      window.location.href = redirectUrl;
     });
   };
 </script>

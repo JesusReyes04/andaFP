@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $province = $_POST['province'] ?? '';
   $city = $_POST['city'] ?? '';
   $modality = $_POST['modality'] ?? '';
+  $active = "open";
 
   $query = "SELECT offers.*, 
             companies.profile_picture AS company_profile_picture, 
@@ -40,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $types = "";
 
   if (!empty($title)) {
-    $query .= " AND offers.title LIKE ?";
+    $query .= " AND offers.required_specialty LIKE ?";
     $params[] = "%$title%";
     $types .= "s";
   }
@@ -62,8 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $params[] = $modality;
     $types .= "s";
   }
+  
+  $query .= " AND offers.status = ?";
+  $params[] = $active;
+  $types .= "s";
 
-  $query .= " ORDER BY offers.created_at DESC LIMIT 10";
+
+  $query .= " ORDER BY offers.created_at DESC";
 
   $stmt = $conection->prepare($query);
 
@@ -85,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/students-dashboard.css">
   <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
@@ -172,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="job-footer">
               <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
               <div class="job-actions">
-                <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn">Ver más</a>
+                <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn" target="_blank">Ver más</a>
                 <button class="btn">Aplicar</button>
               </div>
             </div>

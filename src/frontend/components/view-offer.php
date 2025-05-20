@@ -55,6 +55,7 @@ if (!$offer) {
     <link rel="stylesheet" href="/andaFP/public/assets/css/main-dashboard.css">
     <link rel="stylesheet" href="/andaFP/public/assets/css/view-offer.css">
     <script src="/andaFP/public/assets/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
 <body>
