@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $params[] = $modality;
     $types .= "s";
   }
-  
+
   $query .= " AND offers.status = ?";
   $params[] = $active;
   $types .= "s";
@@ -93,7 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/students-dashboard.css">
-  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -179,13 +178,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
               <div class="job-actions">
                 <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn" target="_blank">Ver más</a>
-                <button class="btn">Aplicar</button>
+                <button class="apply-btn" data-offer-id="<?= $offer['id'] ?>" id="aplyBtn">Aplicar</button>
               </div>
             </div>
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
   </main>
+  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
+  <?php
+  if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
+    $error = json_encode($_SESSION['register_error']); // Escapa correctamente
+    echo "<script>
+    debugger;
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof showError === 'function') {
+          showError($error);
+        } else {
+          console.error('La función showError no está disponible.');
+        }
+      });
+    </script>";
+    unset($_SESSION['register_error']);
+  }
+  ?>
 </body>
 
 </html>
@@ -220,5 +236,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     toggle.addEventListener('click', () => {
       advancedFields.classList.toggle('hidden');
     });
+
+    document.querySelectorAll('.apply-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const offerId = button.getAttribute('data-offer-id');
+
+        fetch('/andaFP/src/backend/apply-offer.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'offer_id=' + encodeURIComponent(offerId)
+          })
+          .then(response => location.href = '/andaFP/public/dashboard/students-dashboard.php');
+      });
+    });
+
   };
 </script>

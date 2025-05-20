@@ -94,17 +94,6 @@ function getFormValidationErrors() {
   const modality = document.getElementById("modality").value;
   const requiredSpecialty = document.getElementById("specialty").value;
 
-  console.log({
-    title,
-    description,
-    province,
-    city,
-    location,
-    startDate,
-    schedule,
-    modality,
-  });
-
   if (!title || title.length < 5) {
     return "El título debe tener al menos 5 caracteres.";
   }

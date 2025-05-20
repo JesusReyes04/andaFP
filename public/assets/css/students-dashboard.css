@@ -368,6 +368,21 @@ select:focus {
   background-color: #004f28;
 }
 
+#aplyBtn{
+  background-color: #006331;
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#aplyBtn:hover {
+  background-color: #004f28;
+}
+
 .job-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;
