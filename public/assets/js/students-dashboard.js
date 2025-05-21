@@ -117,7 +117,11 @@ function validateSearch(placeInput, searchInput) {
 function showError(mensaje) {
   const errorDiv = document.createElement("div");
   errorDiv.innerText = mensaje;
-  errorDiv.classList.add("error-message");
+  if(mensaje === "¡Postulación exitosa!") {
+    errorDiv.classList.add("success-message");
+  }else{
+    errorDiv.classList.add("error-message");
+  }
 
   document.body.appendChild(errorDiv);
 

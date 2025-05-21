@@ -623,3 +623,15 @@ select:focus {
   }
 }
 
+.success-message{
+  background: #2b9a2b;
+  color: white;
+  padding: 1em;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  z-index: 9999;
+  display: none;
+}

@@ -1,3 +1,4 @@
+Cómo podríamos una confirmación de succes?
 <?php
 session_start();
 require('../../src/backend/db_conection/conection.php');
@@ -92,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AndaFP</title>
+  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
   <link rel="stylesheet" href="/andaFP/public/assets/css/students-dashboard.css">
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
@@ -185,23 +187,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endforeach; ?>
       <?php endif; ?>
   </main>
-  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
-  <?php
-  if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
-    $error = json_encode($_SESSION['register_error']); // Escapa correctamente
-    echo "<script>
-    debugger;
-      document.addEventListener('DOMContentLoaded', function() {
-        if (typeof showError === 'function') {
-          showError($error);
-        } else {
-          console.error('La función showError no está disponible.');
-        }
-      });
-    </script>";
-    unset($_SESSION['register_error']);
-  }
-  ?>
 </body>
 
 </html>
@@ -248,9 +233,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             },
             body: 'offer_id=' + encodeURIComponent(offerId)
           })
-          .then(response => location.href = '/andaFP/public/dashboard/students-dashboard.php');
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              showError(data.error);
+            } else {
+              showError("¡Postulación exitosa!");
+            }
+          })
+          .catch(error => {
+            showError("Error de red. Inténtalo de nuevo.");
+          });
       });
     });
-
   };
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      
+    <?php if (isset($_SESSION['register_success'])): ?>
+      const success = <?php echo json_encode($_SESSION['register_success']); ?>;
+      showError(success);
+      <?php unset($_SESSION['register_error']); ?>
+    <?php endif; ?>
+
+    // Mostrar mensaje de error si existe 
+    <?php if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])): ?>
+      const error = <?php echo json_encode($_SESSION['register_error']); ?>;
+      showError(error);
+    <?php unset($_SESSION['register_error']);
+    endif; ?>
+  });
 </script>
