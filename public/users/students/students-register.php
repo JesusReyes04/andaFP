@@ -17,7 +17,7 @@ if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AndaFP</title>
+    <title>Registro de usuario | AndaFP</title>
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
     <link rel="stylesheet" href="/andaFP/public/assets/css/students-register-style.css">
     <script src="/andaFP/public/assets/js/sanitize-form-inputs.js"></script>

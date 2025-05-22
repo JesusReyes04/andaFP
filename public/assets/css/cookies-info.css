@@ -1,0 +1,92 @@
+/* === MAIN CONTENT STYLES === */
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+  color: #006331;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  border-bottom: 3px solid #006331;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.main-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  border-left: 5px solid #006331;
+  padding-left: 0.75rem;
+}
+
+.main-content h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.main-content p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.main-content ul {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.main-content ul li {
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.main-content a {
+  color: #006331;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.main-content a:hover {
+  color: #004d28;
+  text-decoration: underline;
+}
+
+.main-content strong {
+  color: #111827;
+  font-weight: bold;
+}
+
+/* Estilo específico para la lista sin viñetas */
+.main-content ul[style*="list-style: none"] {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.main-content ul[style*="list-style: none"] li {
+  margin: 1rem 0;
+}
+
+.main-content ul[style*="list-style: none"] a {
+  display: inline-block;
+  background-color: #e5f4ec;
+  padding: 0.75rem 1.25rem;
+  border-left: 4px solid #006331;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.main-content ul[style*="list-style: none"] a:hover {
+  background-color: #c3e6d5;
+}
+
+footer {
+  background-color: #efefef;
+  padding: 2rem 0;
+  text-align: center;
+  color: #111827;
+  font-size: 0.875rem;
+  border-top: 1px solid #d1d5db;
+}

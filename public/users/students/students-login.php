@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AndaFP</title>
+    <title>Inicio de sesión | AndaFP</title>
     <link rel="stylesheet" href="/andaFP/public/assets/css/login.css">
 </head>
 
