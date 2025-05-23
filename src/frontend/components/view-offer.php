@@ -55,6 +55,7 @@ if (!$offer) {
     <link rel="stylesheet" href="/andaFP/public/assets/css/main-dashboard.css">
     <link rel="stylesheet" href="/andaFP/public/assets/css/view-offer.css">
     <script src="/andaFP/public/assets/js/sidebar.js" defer></script>
+    <script src="/andaFP/public/assets/js/view-offer.js"></script>
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -92,7 +93,7 @@ if (!$offer) {
                         <p class="empresa-nombre"><?php echo htmlspecialchars($offer['company_name']); ?></p>
                     </div>
                 </div>
-                <a href="#" class="btn-aplicar">Inscribirme en esta oferta</a>
+                <button class="apply-btn" data-offer-id="<?= $offerId ?>" id="aplyBtn">Aplicar</button>
             </div>
             <div class="info-basica">
                 <div><i class="icon">📍</i> <?php echo htmlspecialchars($offer['city'] . ', ' . $offer['province']); ?></div>
@@ -166,4 +167,38 @@ if (!$offer) {
 
         fechaElem.textContent = texto;
     });
+
+    document.querySelectorAll('.apply-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const offerId = button.getAttribute('data-offer-id');
+
+            fetch('/andaFP/src/backend/apply-offer.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'offer_id=' + encodeURIComponent(offerId)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showError(data.error);
+                    } else {
+                        showError("¡Postulación exitosa!");
+                    }
+                })
+                .catch(error => {
+                    showError("Error de red. Inténtalo de nuevo.");
+                });
+        });
+    });
 </script>
+
+<?php if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const error = <?= json_encode($_SESSION['register_error']) ?>;
+        showError(error);
+    });
+</script>
+<?php unset($_SESSION['register_error']); endif; ?>

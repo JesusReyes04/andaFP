@@ -52,7 +52,7 @@
   white-space: normal;
 }
 
-.btn-aplicar {
+.apply-btn {
   background-color: #006331;
   color: #fff;
   padding: 0.6rem 1.2rem;
@@ -65,7 +65,7 @@
   transition: background 0.3s;
 }
 
-.btn-aplicar:hover {
+.apply-btn:hover {
   background-color: #007d3e;
 }
 
@@ -124,7 +124,7 @@
     align-items: flex-start;
   }
 
-  .btn-aplicar {
+  .apply-btn {
     align-self: stretch;
     width: 100%;
     text-align: center;
@@ -141,4 +141,30 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.error-message {
+  background: red;
+  color: white;
+  padding: 1em;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  z-index: 9999;
+  display: none;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1em;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  z-index: 9999;
+  display: none;
 }
