@@ -1,4 +1,3 @@
-Cómo podríamos una confirmación de succes?
 <?php
 session_start();
 require('../../src/backend/db_conection/conection.php');
