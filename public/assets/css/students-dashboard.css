@@ -295,6 +295,7 @@ select:focus {
   cursor: pointer;
   transition: transform 200s ease, box-shadow 200s ease;
   will-change: transform;
+  margin-bottom: 20px;
 }
 
 .job-card:hover {

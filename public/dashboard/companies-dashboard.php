@@ -19,6 +19,35 @@ $query->fetch();
 $query->close();
 
 $imageFileName = basename($profilePicturePath);
+
+$query = $conection->prepare("
+    SELECT 
+        o.*, 
+        s.first_name,
+        s.last_name,
+        s.email,
+        s.province,
+        s.specialty,
+        s.cv
+    FROM 
+        offers o
+    LEFT JOIN 
+        applications a ON o.id = a.offer_id
+    LEFT JOIN 
+        students s ON a.student_id = s.id
+    WHERE 
+        o.company_id = ?
+    ORDER BY 
+        o.id DESC, s.last_name 
+");
+
+$query->bind_param("i", $companyId);
+$query->execute();
+
+$result = $query->get_result();
+$data = $result->fetch_all(MYSQLI_ASSOC);
+
+$query->close();
 ?>
 
 <!DOCTYPE html>
@@ -59,9 +88,72 @@ $imageFileName = basename($profilePicturePath);
   </aside>
 
   <main class="main-content">
-    <h2>Contenido Principal</h2>
-    <p>Este es un ejemplo de contenido con una sidebar a la izquierda y el nombre andaFP a la derecha del header.</p>
+    <?php if (!empty($data)): ?>
+      <h2>Ofertas publicadas</h2>
+
+      <div class="card-container">
+        <?php
+        $groupedOffers = [];
+        foreach ($data as $item) {
+          $offerId = $item['id'];
+          if (!isset($groupedOffers[$offerId])) {
+            $groupedOffers[$offerId] = [
+              'offer' => $item,
+              'applicants' => []
+            ];
+          }
+          if ($item['first_name']) {
+            $groupedOffers[$offerId]['applicants'][] = $item;
+          }
+        }
+
+        foreach ($groupedOffers as $offerId => $group):
+          $item = $group['offer'];
+        ?>
+          <div class="job-card">
+            <div class="job-top">
+              <div class="job-header">
+                <h3 class="job-title"><?= htmlspecialchars($item['title']) ?></h3>
+                <p class="job-company"><?= htmlspecialchars($item['company_name'] ?? '') ?></p>
+              </div>
+            </div>
+
+            <div class="job-meta">
+              <span><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($item['city']) ?>, <?= htmlspecialchars($item['province']) ?></span>
+              <span><strong class="job-data">Modalidad:</strong> <?= htmlspecialchars($item['modality']) ?></span>
+            </div>
+            <p class="job-description"><?= htmlspecialchars($item['description']) ?></p>
+
+            <div class="job-footer">
+              <span class="job-date"><?= htmlspecialchars($item['created_at']) ?></span>
+              <div class="job-actions">
+                <a href="/andaFP/public/dashboard/companies/edit-offer.php?id=<?= $item['id'] ?>" class="btn">Editar</a>
+                <button class="toggle-applicants-btn" data-offer-id="<?= $item['id'] ?>">Ver aplicantes</button>
+              </div>
+            </div>
+
+            <div class="applicants-list" id="applicants-<?= $item['id'] ?>" style="display: none;">
+              <h4>Estudiantes que aplicaron:</h4>
+              <ul>
+                <?php foreach ($group['applicants'] as $applicant): ?>
+                  <li>
+                    <strong><?= htmlspecialchars($applicant['first_name']) ?> <?= htmlspecialchars($applicant['last_name']) ?></strong><br>
+                    <small>Email: <?= htmlspecialchars($applicant['email']) ?></small><br>
+                    <small>Provincia: <?= htmlspecialchars($applicant['province']) ?></small><br>
+                    <small>Especialidad: <?= htmlspecialchars($applicant['specialty']) ?></small><br>
+                    <a href="/andaFP/src/frontend/cv/<?= rawurlencode(basename($applicant['cv'])) ?>" target="_blank" style="text-decoration: none; color: #006331;">Ver CV</a>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <p>No se han publicado ofertas todavía.</p>
+    <?php endif; ?>
   </main>
+
 </body>
 
 </html>
