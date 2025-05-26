@@ -433,3 +433,22 @@ body {
   border-radius: 8px;
   font-size: 0.95rem;
 }
+
+.btn-accept {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-reject {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}

@@ -22,6 +22,8 @@ $imageFileName = basename($profilePicturePath);
 
 $query = $conection->prepare("
     SELECT 
+        a.student_id,
+        a.status as estao,
         o.*, 
         s.first_name,
         s.last_name,
@@ -141,7 +143,28 @@ $query->close();
                     <small>Email: <?= htmlspecialchars($applicant['email']) ?></small><br>
                     <small>Provincia: <?= htmlspecialchars($applicant['province']) ?></small><br>
                     <small>Especialidad: <?= htmlspecialchars($applicant['specialty']) ?></small><br>
-                    <a href="/andaFP/src/frontend/cv/<?= rawurlencode(basename($applicant['cv'])) ?>" target="_blank" style="text-decoration: none; color: #006331;">Ver CV</a>
+                    <a href="/andaFP/src/frontend/cv/<?= rawurlencode(basename($applicant['cv'])) ?>" target="_blank" style="text-decoration: none; color: #006331;">Ver CV</a><br><br>
+                    <button class="btn-accept" data-student-id="<?= $applicant['student_id'] ?>" data-offer-id="<?= $item['id'] ?>">Aceptar</button>
+                    <button class="btn-reject" data-student-id="<?= $applicant['student_id'] ?>" data-offer-id="<?= $item['id'] ?>">Rechazar</button>
+                    <span class="status-message" id="status-<?= $item['id'] ?>-<?= $applicant['student_id'] ?>"></span> <br>
+                    
+                    <?php
+                    $estao = $applicant['estao'] ?? 'pending';
+
+                    switch ($estao) {
+                      case 'approved':
+                        $statusText = 'Aprobado';
+                        break;
+                      case 'rejected':
+                        $statusText = 'Rechazado';
+                        break;
+                      case 'pending':
+                      default:
+                        $statusText = 'Pendiente';
+                        break;
+                    }
+                    ?>
+                    <small>Estado: <?= $statusText ?></small><br>
                   </li>
                 <?php endforeach; ?>
               </ul>
