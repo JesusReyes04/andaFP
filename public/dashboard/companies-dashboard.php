@@ -43,6 +43,8 @@ $query = $conection->prepare("
         o.id DESC, s.last_name 
 ");
 
+unset($_SESSION['register_success']);
+
 $query->bind_param("i", $companyId);
 $query->execute();
 
@@ -129,7 +131,7 @@ $query->close();
             <div class="job-footer">
               <span class="job-date"><?= htmlspecialchars($item['created_at']) ?></span>
               <div class="job-actions">
-                <a href="/andaFP/public/dashboard/companies/edit-offer.php?id=<?= $item['id'] ?>" class="btn">Editar</a>
+                <a href="/andaFP/public/dashboard/companies/edit-offers.php?id=<?= $item['id'] ?>" class="btn">Editar</a>
                 <button class="toggle-applicants-btn" data-offer-id="<?= $item['id'] ?>">Ver aplicantes</button>
               </div>
             </div>
@@ -147,7 +149,7 @@ $query->close();
                     <button class="btn-accept" data-student-id="<?= $applicant['student_id'] ?>" data-offer-id="<?= $item['id'] ?>">Aceptar</button>
                     <button class="btn-reject" data-student-id="<?= $applicant['student_id'] ?>" data-offer-id="<?= $item['id'] ?>">Rechazar</button>
                     <span class="status-message" id="status-<?= $item['id'] ?>-<?= $applicant['student_id'] ?>"></span> <br>
-                    
+
                     <?php
                     $estao = $applicant['estao'] ?? 'pending';
 
@@ -173,7 +175,11 @@ $query->close();
         <?php endforeach; ?>
       </div>
     <?php else: ?>
-      <p>No se han publicado ofertas todavía.</p>
+      <div width="100%">
+        <h3 style="border-radius: 3px; padding: .5rem; border-left: 6px solid #006331; background: #ffffff; color: #333333; font-size: 1.5rem;">Hoy es un gran día para publicar tu primera oferta</h3>
+        <p style="border-radius: 3px; padding: .5rem; color: #333333; margin-bottom: 20px; font-size: 1.2rem; font-weight: normal;">Encuentra a personal formado para las necesidades de tu negocio en AndaFP.</p>
+      </div>
+
     <?php endif; ?>
   </main>
 

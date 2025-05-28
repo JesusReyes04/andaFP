@@ -122,6 +122,7 @@ body {
 
 /* === CONTENIDO PRINCIPAL === */
 .main-content {
+  background-color: #f4f4f4;
   padding: 2rem;
   padding-top: 100px;
   max-width: 1500px;
