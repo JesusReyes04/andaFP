@@ -60,7 +60,7 @@ $imageFileName = basename($profilePicturePath);
       <ul>
         <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
         <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
-        <li><a href="#">Tus estadísticas</a></li>
+        
         <li><a href="#">Ayuda</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href="#">Sobre nosotros</a></li>
