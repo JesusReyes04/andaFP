@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <li><a href="/andaFP/src/backend/sections/applications-page.php">Candidaturas</a></li>
         
         <li><a href="#">Ayuda</a></li>
-        <li><a href="#">Ajustes</a></li>
+        <li><a href="/andaFP/public/users/students/students-settings.php">Ajustes</a></li>
         <li><a href="#">Sobre nosotros</a></li>
         <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
         <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>

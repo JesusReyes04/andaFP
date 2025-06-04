@@ -108,6 +108,10 @@ if (!$company) {
 
         <button type="submit">Guardar cambios</button>
     </form>
+
+    <div style="margin-top: 50px;">
+        <p style="text-align: center; color: #444;">Tenga en cuenta que solo se actualizan aquellos cambios en los que el usuario haga cambios</p>
+    </div>
 </main>
 
 <footer class="footer">

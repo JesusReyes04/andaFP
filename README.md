@@ -1,10 +1,10 @@
-# 🧭 AndaFP
+# AndaFP
 
 **AndaFP** es una plataforma web desarrollada para conectar a estudiantes de Formación Profesional (FP) con empresas que ofrecen prácticas en **Andalucía**. El proyecto tiene como objetivo facilitar la búsqueda, gestión y aplicación a ofertas de prácticas de forma eficiente y accesible para ambas partes.
 
 ---
 
-## 🚀 Características principales
+## Características principales
 
 ### 👨‍🎓 Estudiantes
 - Registro con validación y control de errores.
@@ -12,7 +12,7 @@
 - Aplicación a ofertas directamente desde la plataforma.
 - Panel de usuario con control de solicitudes realizadas.
 
-### 🏢 Empresas
+### Empresas
 - Registro con datos fiscales, sector y perfil empresarial.
 - Publicación de ofertas con validación y gestión de errores.
 - Edición de ofertas ya publicadas.
@@ -21,7 +21,7 @@
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: PHP
@@ -33,7 +33,7 @@
 
 ---
 
-## 🗃️ Estructura de la base de datos
+## Estructura de la base de datos
 
 La base de datos `andafp` contiene las siguientes tablas clave:
 
@@ -43,5 +43,5 @@ La base de datos `andafp` contiene las siguientes tablas clave:
 - `applications`: Registro de las solicitudes realizadas por los estudiantes.
 
 ---
-## 🤝 Contribuciones
+## Contribuciones
 Este proyecto está siendo desarrollado como parte de un módulo de FP. No se aceptan contribuciones externas por el momento, pero puedes hacer sugerencias o reportar errores mediante issues.
