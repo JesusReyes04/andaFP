@@ -10,7 +10,7 @@ $studentId = null;
 $imageFileName = null;
 
 // Check if the user is not a student (student_id cookie not set)
-if (!isset($_COOKIE['student_id'])) {
+if (isset($_COOKIE['student_id'])) {
     $companyId = $_COOKIE['company_id'] ?? null;
     if (!$companyId) {
         header("Location: /andaFP/public/users/companies/companies-login.php");
@@ -65,7 +65,7 @@ if (!isset($_COOKIE['student_id'])) {
     <header class="header">
         <div class="header-container">
             <button id="menu-toggle" class="menu-btn">&#9776;</button>
-            <h1 class="andafp">andaFP</h1>
+            <h1 class="andafp">AndaFP</h1>
             <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
         </div>
     </header>
@@ -76,18 +76,17 @@ if (!isset($_COOKIE['student_id'])) {
             <ul>
                 <?php if (isset($studentId)) : ?>
                     <li><a href="/andaFP/public/dashboard/students-dashboard.php">Inicio</a></li>
-                    <li><a href="/andaFP/public/dashboard/students/your-offers.php">Tus ofertas</a></li>
-                    <li><a href="#">Ayuda</a></li>
-                    <li><a href="#">Ajustes</a></li>
+                    <li><a href="/andaFP/src/backend/sections/applications-page.php">Candidaturas</a></li>
+                    <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
+                    <li><a href="/andaFP/public/users/students/students-settings.php">Ajustes</a></li>
                     <li><a href="#">Sobre nosotros</a></li>
                     <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
                     <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>
                 <?php else : ?>
                     <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
                     <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
-                    
-                    <li><a href="#">Ayuda</a></li>
-                    <li><a href="#">Ajustes</a></li>
+                    <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
+                    <li><a href="/andaFP/public/users/companies/companies-settings.php">Ajustes</a></li>
                     <li><a href="#">Sobre nosotros</a></li>
                     <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
                     <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
