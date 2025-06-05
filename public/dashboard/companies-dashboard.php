@@ -70,7 +70,7 @@ $query->close();
   <header class="header">
     <div class="header-container">
       <button id="menu-toggle" class="menu-btn">&#9776;</button>
-      <h1 class="andafp">andaFP</h1>
+      <h1 class="andafp">AndaFP</h1>
       <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
     </div>
   </header>
@@ -81,9 +81,9 @@ $query->close();
       <ul>
         <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
         <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
-        <li><a href="#">Ayuda</a></li>
+        <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
         <li><a href="/andaFP/public/users/companies/companies-settings.php">Ajustes</a></li>
-        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
         <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
         <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
       </ul>
@@ -123,12 +123,27 @@ $query->close();
 
             <div class="job-meta">
               <span><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($item['city']) ?>, <?= htmlspecialchars($item['province']) ?></span>
-              <span><strong class="job-data">Modalidad:</strong> <?= htmlspecialchars($item['modality']) ?></span>
+              <span>
+                <?php
+                switch (htmlspecialchars($item['modality'])) {
+                  case 'onsite':
+                    echo '<strong class="job-data">Modalidad:</strong> Presencial';
+                    break;
+                  case 'remote':
+                    echo '<strong class="job-data">Modalidad:</strong> Remoto';
+                    break;
+                  case 'hybrid':
+                    echo '<strong class="job-data">Modalidad:</strong> Híbrido';
+                    break;
+                  default:
+                    echo '<strong class="job-data">Modalidad:</strong> Desconocida';
+                }
+                ?>
             </div>
             <p class="job-description"><?= htmlspecialchars($item['description']) ?></p>
 
             <div class="job-footer">
-              <span class="job-date"><?= htmlspecialchars($item['created_at']) ?></span>
+              <span class="job-date" data-created-at="<?php echo nl2br(htmlspecialchars($item['created_at'])); ?>">Publicada...</span>
               <div class="job-actions">
                 <a href="/andaFP/public/dashboard/companies/edit-offers.php?id=<?= $item['id'] ?>" class="btn">Editar</a>
                 <button class="toggle-applicants-btn" data-offer-id="<?= $item['id'] ?>">Ver aplicantes</button>
@@ -185,3 +200,41 @@ $query->close();
 </body>
 
 </html>
+
+<script>
+  window.onload = function() {
+    const fechaElems = document.querySelectorAll(".job-date");
+    fechaElems.forEach(fechaElem => {
+      const createdAtStr = fechaElem.dataset.createdAt;
+      const createdAt = new Date(createdAtStr);
+      const ahora = new Date();
+
+      const diffMs = ahora - createdAt;
+      const diffSeg = Math.floor(diffMs / 1000);
+      const diffMin = Math.floor(diffSeg / 60);
+      const diffHoras = Math.floor(diffMin / 60);
+      const diffDias = Math.floor(diffHoras / 24);
+
+      let texto = "";
+
+      if (diffSeg < 60) {
+        texto = `Publicada hace ${diffSeg} segundo${diffSeg === 1 ? "" : "s"}`;
+      } else if (diffMin < 60) {
+        texto = `Publicada hace ${diffMin} minuto${diffMin === 1 ? "" : "s"}`;
+      } else if (diffHoras < 24) {
+        texto = `Publicada hace ${diffHoras} hora${diffHoras === 1 ? "" : "s"}`;
+      } else if (diffDias === 1) {
+        texto = "Publicada ayer";
+      } else if (diffDias <= 2) {
+        texto = `Publicada hace ${diffDias} días`;
+      } else {
+        const dia = createdAt.getDate().toString().padStart(2, "0");
+        const mes = (createdAt.getMonth() + 1).toString().padStart(2, "0");
+        const año = createdAt.getFullYear().toString().slice(-2);
+        texto = `Publicada el ${dia}/${mes}/${año}`;
+      }
+
+      fechaElem.textContent = texto;
+    });
+  };
+</script>

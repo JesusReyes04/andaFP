@@ -1,0 +1,89 @@
+.main-content {
+  max-width: 900px;
+  margin-top: 6rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 99, 49, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.main-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.main-content ul li {
+  margin-bottom: 0.5rem;
+  list-style: disc;
+}
+
+.main-content blockquote {
+  background-color: #f0fdf5;
+  border-left: 5px solid #00a65a;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  color: #004d29;
+  font-style: italic;
+  border-radius: 8px;
+}
+
+.main-content strong {
+  color: #00592c;
+}
+
+.main-content .contacto {
+  background-color: #f9fffa;
+  border: 1px solid #b9eacb;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.main-content .contacto p {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.5rem;
+    margin: 1rem;
+    margin-top: 6rem;
+  }
+
+  .main-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .main-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .main-content h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Estilo específico para lista de contacto */
+#about ul[style*="list-style: none"] li strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #006331;
+}
+
+footer {
+  margin-top: 50px;
+  background-color: #efefef;
+  padding: 2rem 0;
+  text-align: center;
+  color: #111827;
+  font-size: 0.875rem;
+  border-top: 1px solid #d1d5db;
+}
+
+.main-content ul[style*="list-style: none"] a {
+  color: #333;
+  text-decoration: none;
+}

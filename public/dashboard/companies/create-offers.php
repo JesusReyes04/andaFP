@@ -46,12 +46,11 @@ $imageFileName = basename($profilePicturePath);
         <nav>
             <ul>
                 <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
-                <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Candidaturas</a></li>
-                
-                <li><a href="#">Ayuda</a></li>
-                <li><a href="#">Ajustes</a></li>
-                <li><a href="#">Sobre nosotros</a></li>
-                <li><a href="#">Política de datos</a></li>
+                <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
+                <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
+                <li><a href="/andaFP/public/users/companies/companies-settings.php">Ajustes</a></li>
+                <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
+                <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
                 <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
             </ul>
         </nav>

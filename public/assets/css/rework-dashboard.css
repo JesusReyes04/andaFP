@@ -115,7 +115,7 @@ body {
 /* === MAIN CONTENT === */
 .main-content {
   padding: 2rem;
-  padding-top: 100px;
+  padding-top: 30px;
   max-width: 1500px;
   margin: 0 auto;
 }
@@ -268,7 +268,6 @@ input[type="text"]:focus,
 
 /* === CARDS === */
 .card-container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -380,7 +379,7 @@ input[type="text"]:focus,
 @media (max-width: 768px) {
   .main-content {
     padding: 1rem;
-    padding-top: 90px;
+    padding-top: 30px;
   }
 
   .job-description {
@@ -403,3 +402,138 @@ input[type="text"]:focus,
   text-align: center;
   font-size: 1.5rem;
 }
+
+.search-form {
+  max-width: 800px;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.search-form h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Campos principales y avanzados en grid responsive */
+.search-fields,
+.advanced-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Oculta los campos avanzados */
+.advanced-fields.hidden {
+  display: none;
+}
+
+/* Grupo de inputs */
+.input-group {
+  position: relative;
+}
+
+/* Estilos comunes para inputs y selects */
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #006331;
+  outline: none;
+}
+
+/* Sugerencias */
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  z-index: 10;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestions-list li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Botones */
+.buttons-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+#toggleAdvanced,
+#submitForm {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#toggleAdvanced {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+#toggleAdvanced:hover {
+  background-color: #d1d5db;
+}
+
+#submitForm {
+  background-color: #006331;
+  color: white;
+}
+
+#submitForm:hover {
+  background-color: #004f28;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 500px) {
+  .search-form {
+    padding: 1rem;
+  }
+
+  .search-fields,
+  .advanced-fields,
+  .buttons-group {
+    grid-template-columns: 1fr;
+  }
+}
+

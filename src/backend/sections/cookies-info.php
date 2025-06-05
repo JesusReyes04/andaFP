@@ -79,7 +79,7 @@ if (isset($_COOKIE['student_id'])) {
                     <li><a href="/andaFP/src/backend/sections/applications-page.php">Candidaturas</a></li>
                     <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
                     <li><a href="/andaFP/public/users/students/students-settings.php">Ajustes</a></li>
-                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
                     <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
                     <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>
                 <?php else : ?>
@@ -87,7 +87,7 @@ if (isset($_COOKIE['student_id'])) {
                     <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
                     <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
                     <li><a href="/andaFP/public/users/companies/companies-settings.php">Ajustes</a></li>
-                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
                     <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
                     <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
                 <?php endif; ?>

@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <li><a href="/andaFP/src/backend/sections/applications-page.php">Candidaturas</a></li>
         <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
         <li><a href="/andaFP/public/users/students/students-settings.php">Ajustes</a></li>
-        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
         <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
         <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>
       </ul>
@@ -171,11 +171,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="job-meta">
               <span id="job-ubication"><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($offer['city']) ?>, <?= htmlspecialchars($offer['province']) ?></span>
-              <span id="job-modality"><strong class="job-data">Modalidad:</strong> <?= htmlspecialchars($offer['modality']) ?></span>
+              <span id="job-modality">
+                <?php
+                switch (htmlspecialchars($offer['modality'])) {
+                  case 'onsite':
+                    echo '<strong class="job-data">Modalidad:</strong> Presencial';
+                    break;
+                  case 'remote':
+                    echo '<strong class="job-data">Modalidad:</strong> Remoto';
+                    break;
+                  case 'hybrid':
+                    echo '<strong class="job-data">Modalidad:</strong> Híbrido';
+                    break;
+                  default:
+                    echo '<strong class="job-data">Modalidad:</strong> Desconocida';
+                }
+                ?>
+              </span>
             </div>
             <p class="job-description"><?php echo htmlspecialchars($offer['description']); ?></p>
             <div class="job-footer">
-              <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
+              <span class="job-date" data-created-at="<?php echo nl2br(htmlspecialchars($offer['created_at'])); ?>">Publicada...</span>
               <div class="job-actions">
                 <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn" target="_blank">Ver más</a>
                 <button class="apply-btn" data-offer-id="<?= $offer['id'] ?>" id="aplyBtn">Aplicar</button>
@@ -190,6 +206,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </html>
 <script>
   window.onload = function() {
+
+    const fechaElems = document.querySelectorAll(".job-date");
+    fechaElems.forEach(fechaElem => {
+      const createdAtStr = fechaElem.dataset.createdAt;
+      const createdAt = new Date(createdAtStr);
+      const ahora = new Date();
+
+      const diffMs = ahora - createdAt;
+      const diffSeg = Math.floor(diffMs / 1000);
+      const diffMin = Math.floor(diffSeg / 60);
+      const diffHoras = Math.floor(diffMin / 60);
+      const diffDias = Math.floor(diffHoras / 24);
+
+      let texto = "";
+
+      if (diffSeg < 60) {
+        texto = `Publicada hace ${diffSeg} segundo${diffSeg === 1 ? "" : "s"}`;
+      } else if (diffMin < 60) {
+        texto = `Publicada hace ${diffMin} minuto${diffMin === 1 ? "" : "s"}`;
+      } else if (diffHoras < 24) {
+        texto = `Publicada hace ${diffHoras} hora${diffHoras === 1 ? "" : "s"}`;
+      } else if (diffDias === 1) {
+        texto = "Publicada ayer";
+      } else if (diffDias <= 2) {
+        texto = `Publicada hace ${diffDias} días`;
+      } else {
+        const dia = createdAt.getDate().toString().padStart(2, "0");
+        const mes = (createdAt.getMonth() + 1).toString().padStart(2, "0");
+        const año = createdAt.getFullYear().toString().slice(-2);
+        texto = `Publicada el ${dia}/${mes}/${año}`;
+      }
+
+      fechaElem.textContent = texto;
+    });
+
     const searchInput = document.getElementById('searchInput');
     const placeInput = document.getElementById('placeInput');
     const suggestionsList = document.getElementById('suggestionsList');
@@ -249,7 +300,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-      
+
     <?php if (isset($_SESSION['register_success'])): ?>
       const success = <?php echo json_encode($_SESSION['register_success']); ?>;
       showError(success);

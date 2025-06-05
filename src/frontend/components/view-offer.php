@@ -73,13 +73,12 @@ if (!$offer) {
         <nav>
             <ul>
                 <li><a href="/andaFP/public/dashboard/students-dashboard.php">Inicio</a></li>
-                <li><a href="#">Candidaturas</a></li>
-                
-                <li><a href="#">Ayuda</a></li>
-                <li><a href="#">Ajustes</a></li>
-                <li><a href="#">Sobre nosotros</a></li>
-                <li><a href="#">Política de datos</a></li>
-                <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
+                <li><a href="/andaFP/src/backend/sections/applications-page.php">Candidaturas</a></li>
+                <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
+                <li><a href="/andaFP/public/users/students/students-settings.php">Ajustes</a></li>
+                <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
+                <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
+                <li><a href="/andaFP/src/backend/logout/students-logout.php" id="logout">Cerrar sesión</a></li>
             </ul>
         </nav>
     </aside>
@@ -195,10 +194,11 @@ if (!$offer) {
 </script>
 
 <?php if (isset($_SESSION['register_error']) && !empty($_SESSION['register_error'])): ?>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const error = <?= json_encode($_SESSION['register_error']) ?>;
-        showError(error);
-    });
-</script>
-<?php unset($_SESSION['register_error']); endif; ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const error = <?= json_encode($_SESSION['register_error']) ?>;
+            showError(error);
+        });
+    </script>
+<?php unset($_SESSION['register_error']);
+endif; ?>

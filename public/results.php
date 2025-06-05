@@ -1,14 +1,6 @@
 <?php
-session_start();
 require('../src/backend/db_conection/conection.php');
 $conection = getConnection();
-
-$studentId = $_COOKIE['student_id'] ?? null;
-
-if (!$studentId) {
-  header("Location: /andaFP/public/users/students/students-login.php");
-  exit();
-}
 
 // get params form post
 $offers = [];
@@ -148,74 +140,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AndaFP</title>
   <link rel="stylesheet" href="/andaFP/public/assets/css/rework-dashboard.css">
-  <script src="/andaFP/public/assets/js/students-dashboard.js" defer></script>
+  <script src="/andaFP/public/assets/js/results.js" defer></script>
   <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
-  <header class="header">
-    <div class="header-container">
-      <button id="menu-toggle" class="menu-btn"><span class="material-symbols-outlined">
-          filter_alt
-        </span></button>
-      <h1 class="andafp">andaFP</h1>
-      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
-    </div>
-  </header>
+  <div class="form-container">
+    <h1 style="width: 100%; text-align: center;">AndaFP</h1>
+    <form class="search-form" action="" method="post" id="searchForm">
+      <h2>Busque aquí sus ofertas</h2>
+      <div class="search-fields">
+        <div class="input-group">
+          <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
+          <ul id="suggestionsList" class="suggestions-list"></ul>
+        </div>
+        <div class="input-group">
+          <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
+          <ul id="placeSuggestionsList" class="suggestions-list"></ul>
+        </div>
+      </div>
 
-  <aside class="sidebar" id="sidebar">
-    <button class="close-btn" id="close-btn">&times;</button>
-    <nav>
-      <ul>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-        <li>filter</li>
-      </ul>
-    </nav>
-  </aside>
+      <div class="advanced-fields hidden">
+        <div class="input-group">
+          <input type="text" id="city" name="city" placeholder="Ciudad">
+        </div>
+        <div class="input-group">
+          <select id="modality" name="modality">
+            <option value="" disabled selected>Modalidad</option>
+            <option value="onsite">Presencial</option>
+            <option value="remote">Remoto</option>
+            <option value="hybrid">Híbrido</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="buttons-group">
+        <button type="button" id="toggleAdvanced">Búsqueda avanzada</button>
+        <button type="submit" id="submitForm">Buscar</button>
+      </div>
+    </form>
+  </div>
 
   <main class="main-content">
-    <div class="form-container">
-      <form class="search-form" action="" method="post" id="searchForm">
-        <h2>Busque aquí sus ofertas</h2>
-        <div class="search-fields">
-          <div class="input-group">
-            <input type="text" id="searchInput" name="title" placeholder="Título formativo" autocomplete="off">
-            <ul id="suggestionsList" class="suggestions-list"></ul>
-          </div>
-          <div class="input-group">
-            <input type="text" id="placeInput" name="province" placeholder="Provincia" autocomplete="off">
-            <ul id="placeSuggestionsList" class="suggestions-list"></ul>
-          </div>
-        </div>
-
-        <div class="advanced-fields hidden">
-          <div class="input-group">
-            <input type="text" id="city" name="city" placeholder="Ciudad">
-          </div>
-          <div class="input-group">
-            <select id="modality" name="modality">
-              <option value="" disabled selected>Modalidad</option>
-              <option value="onsite">Presencial</option>
-              <option value="remote">Remoto</option>
-              <option value="hybrid">Híbrido</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="buttons-group">
-          <button type="button" id="toggleAdvanced">Búsqueda avanzada</button>
-          <button type="submit" id="submitForm">Buscar</button>
-        </div>
-      </form>
-    </div>
-
+    <h2 style="margin-bottom: 20px;">Los resultados de su búsqueda:</h2>
     <?php if (!empty($offers)): ?>
       <div class="card-container">
         <?php foreach ($offers as $offer): ?>
@@ -230,11 +198,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="job-meta">
               <span id="job-ubication"><strong class="job-data">Ubicación:</strong> <?= htmlspecialchars($offer['city']) ?>, <?= htmlspecialchars($offer['province']) ?></span>
-              <span id="job-modality"><strong class="job-data">Modalidad:</strong> <?= htmlspecialchars($offer['modality']) ?></span>
+              <span id="job-modality">
+                <?php
+                switch (htmlspecialchars($offer['modality'])) {
+                  case 'onsite':
+                    echo '<strong class="job-data">Modalidad:</strong> Presencial';
+                    break;
+                  case 'remote':
+                    echo '<strong class="job-data">Modalidad:</strong> Remoto';
+                    break;
+                  case 'hybrid':
+                    echo '<strong class="job-data">Modalidad:</strong> Híbrido';
+                    break;
+                  default:
+                    echo '<strong class="job-data">Modalidad:</strong> Desconocida';
+                }
+                ?>
             </div>
             <p class="job-description"><?php echo htmlspecialchars($offer['description']); ?></p>
             <div class="job-footer">
-              <span class="job-date"><?php echo htmlspecialchars($offer['created_at']); ?></span>
+              <span class="job-date" id="date" data-created-at="<?php echo nl2br(htmlspecialchars($offer['created_at'])); ?>">Publicada...</span>
               <div class="job-actions">
                 <a href="/andaFP/src/frontend/components/view-offer.php?id=<?php echo $offer['id']; ?>" class="btn" target="_blank">Ver más</a>
                 <button class="btn">Aplicar</button>
@@ -271,12 +254,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     form.addEventListener('click', function(event) {
       validateInputsValues(event, placeInput, searchInput);
     });
-    
+
     const toggle = document.getElementById('toggleAdvanced');
     const advancedFields = document.querySelector('.advanced-fields');
     toggle.addEventListener('click', () => {
       advancedFields.classList.toggle('hidden');
       toggle.textContent = advancedFields.classList.contains('hidden') ? 'Búsqueda avanzada' : 'Ocultar búsqueda avanzada';
     });
+
+    const fechaElems = document.querySelectorAll(".job-date");
+    fechaElems.forEach(fechaElem => {
+      const createdAtStr = fechaElem.dataset.createdAt;
+      const createdAt = new Date(createdAtStr);
+      const ahora = new Date();
+
+      const diffMs = ahora - createdAt;
+      const diffSeg = Math.floor(diffMs / 1000);
+      const diffMin = Math.floor(diffSeg / 60);
+      const diffHoras = Math.floor(diffMin / 60);
+      const diffDias = Math.floor(diffHoras / 24);
+
+      let texto = "";
+
+      if (diffSeg < 60) {
+        texto = `Publicada hace ${diffSeg} segundo${diffSeg === 1 ? "" : "s"}`;
+      } else if (diffMin < 60) {
+        texto = `Publicada hace ${diffMin} minuto${diffMin === 1 ? "" : "s"}`;
+      } else if (diffHoras < 24) {
+        texto = `Publicada hace ${diffHoras} hora${diffHoras === 1 ? "" : "s"}`;
+      } else if (diffDias === 1) {
+        texto = "Publicada ayer";
+      } else if (diffDias <= 2) {
+        texto = `Publicada hace ${diffDias} días`;
+      } else {
+        const dia = createdAt.getDate().toString().padStart(2, "0");
+        const mes = (createdAt.getMonth() + 1).toString().padStart(2, "0");
+        const año = createdAt.getFullYear().toString().slice(-2);
+        texto = `Publicada el ${dia}/${mes}/${año}`;
+      }
+
+      fechaElem.textContent = texto;
+    });
+
   };
 </script>

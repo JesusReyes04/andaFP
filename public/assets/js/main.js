@@ -106,7 +106,7 @@ function showError(mensaje) {
     }, 3000);
 }
 
-function validateInputsValues(e, placeInput, searchInput) {
+function validateInputsValues(placeInput, searchInput) {
     const placeValue = placeInput.value.trim().toLowerCase();
     const searchValue = searchInput.value.trim().toLowerCase();
 
@@ -115,7 +115,35 @@ function validateInputsValues(e, placeInput, searchInput) {
 
     if (!(validGrado && validPlace) && !(validGrado && placeValue === "") &&!(validPlace && searchValue ==="")) {
         showError("El contenido de los campos debe coincidir con alguna de las sugerencias.");
-        e.preventDefault();
         return;
+    }else{
+        return true;
     }
+}
+
+function redirectToSearch(placeInput, searchInput) {
+    if (validateInputsValues(placeInput, searchInput)) {
+        let url = getURLParameter(placeInput, searchInput);
+        window.location.href = url;
+    }
+
+}
+
+function getURLParameter(placeInput, searchInput) {
+  const urlParams = new URLSearchParams();
+
+  const title = searchInput.value.trim();
+  const place = placeInput.value.trim();
+
+  if (title) {
+    urlParams.append("title", title);
+  }
+  if (place) {
+    urlParams.append("place", place);
+  }
+
+  const url = "http://localhost/andaFP/public/results.php" 
+    + (urlParams.toString() ? "?" + urlParams.toString() : "");
+
+  return url;
 }

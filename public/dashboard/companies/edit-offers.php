@@ -38,6 +38,7 @@ $imageFileName = basename($profilePicturePath);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,30 +46,30 @@ $imageFileName = basename($profilePicturePath);
     <link rel="stylesheet" href="/andaFP/public/assets/css/create-offers-form.css">
     <link rel="shortcut icon" href="/andaFP/public/assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
+
 <body>
     <header class="header">
-    <div class="header-container">
-      <button id="menu-toggle" class="menu-btn">&#9776;</button>
-      <h1 class="andafp">andaFP</h1>
-      <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
-    </div>
-  </header>
+        <div class="header-container">
+            <button id="menu-toggle" class="menu-btn">&#9776;</button>
+            <h1 class="andafp">andaFP</h1>
+            <img src="/andaFP/src/frontend/profile-image/<?php echo htmlspecialchars($imageFileName); ?>" alt="" class="profile-pic">
+        </div>
+    </header>
 
-  <aside class="sidebar" id="sidebar">
-    <button class="close-btn" id="close-btn">&times;</button>
-    <nav>
-      <ul>
-        <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
-        <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
-        
-        <li><a href="#">Ayuda</a></li>
-        <li><a href="#">Ajustes</a></li>
-        <li><a href="#">Sobre nosotros</a></li>
-        <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
-        <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
-      </ul>
-    </nav>
-  </aside>
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" id="close-btn">&times;</button>
+        <nav>
+            <ul>
+                <li><a href="/andaFP/public/dashboard/companies-dashboard.php">Inicio</a></li>
+                <li><a href="/andaFP/public/dashboard/companies/create-offers.php">Publicar ofertas</a></li>
+                <li><a href="/andaFP/src/backend/sections/help.php">Ayuda</a></li>
+                <li><a href="/andaFP/public/users/companies/companies-settings.php">Ajustes</a></li>
+                <li><a href="/andaFP/src/backend/sections/about-us.php">Sobre nosotros</a></li>
+                <li><a href="/andaFP/src/backend/sections/cookies-info.php">Política de datos</a></li>
+                <li><a href="/andaFP/src/backend/logout/companies-logout.php" id="logout">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </aside>
 
 
     <main class="main-content">
@@ -151,4 +152,5 @@ $imageFileName = basename($profilePicturePath);
         });
     </script>
 </body>
+
 </html>
