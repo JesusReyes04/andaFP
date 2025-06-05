@@ -35,33 +35,6 @@ while ($row = $result->fetch_assoc()) {
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css">
   <script src="./assets/js/main.js"></script>
-  <script>
-    window.onload = function() {
-      const searchInput = document.getElementById('searchInput');
-      const placeInput = document.getElementById('placeInput');
-      const suggestionsList = document.getElementById('suggestionsList');
-      const placeSuggestionsList = document.getElementById('placeSuggestionsList');
-      const button = document.getElementById("submitForm");
-
-      searchInput.addEventListener('input', showSuggestions);
-      placeInput.addEventListener('input', showPlaceSuggestions);
-
-      searchInput.addEventListener('focus', () => {
-        placeSuggestionsList.style.display = 'none';
-        suggestionsList.style.display = 'block';
-      });
-
-      placeInput.addEventListener('focus', () => {
-        suggestionsList.style.display = 'none';
-        placeSuggestionsList.style.display = 'block';
-      });
-
-      button.addEventListener('click', function() {
-        redirectToSearch(placeInput, searchInput);
-      });
-
-    };
-  </script>
   <link rel="shortcut icon" href="./assets/favicon/andaFP.ico" type="image/x-icon">
 </head>
 
@@ -122,6 +95,7 @@ while ($row = $result->fetch_assoc()) {
       </div>
     </div>
 
+    <h2 style="margin-top: 50px; margin-bottom: 20px;">Constulta la cantidad de ofertas que hay en cada provincia</h2>
     <svg version="1.2" id="svgAndalucia" xmlns:cc="http://creativecommons.org/ns#"
       xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -184,6 +158,29 @@ while ($row = $result->fetch_assoc()) {
         provincia.addEventListener("mouseleave", () => {
           tooltip.style.display = "none";
         });
+      });
+
+      const searchInput = document.getElementById('searchInput');
+      const placeInput = document.getElementById('placeInput');
+      const suggestionsList = document.getElementById('suggestionsList');
+      const placeSuggestionsList = document.getElementById('placeSuggestionsList');
+      const button = document.getElementById("submitForm");
+
+      searchInput.addEventListener('input', showSuggestions);
+      placeInput.addEventListener('input', showPlaceSuggestions);
+
+      searchInput.addEventListener('focus', () => {
+        placeSuggestionsList.style.display = 'none';
+        suggestionsList.style.display = 'block';
+      });
+
+      placeInput.addEventListener('focus', () => {
+        suggestionsList.style.display = 'none';
+        placeSuggestionsList.style.display = 'block';
+      });
+
+      button.addEventListener('click', function() {
+        redirectToSearch(placeInput, searchInput);
       });
     };
   </script>
