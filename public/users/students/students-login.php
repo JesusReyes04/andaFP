@@ -27,10 +27,7 @@
             <button type="submit">Iniciar sesión</button>
         </form>
 
-        <div class="extraLinksContainer">
-            <div class="extraLinks">
-                <p>¿Olvidaste tu contraseña? <a href="#">Recuperar contraseña</a></p>
-            </div>        
+        <div class="extraLinksContainer">        
             <div class="extraLinks">
                 <p>¿Aún no estás registrado? <a href="/andaFP/public/users/students/students-register.php">Regístrate</a></p>
             </div>

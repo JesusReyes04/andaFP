@@ -28,10 +28,7 @@
             <button type="submit">Iniciar sesión</button>
         </form>
 
-        <div class="extraLinksContainer">
-            <div class="extraLinks">
-                <p>¿Has olvidado tu contraseña? <a href="#">Recuperarla</a></p>
-            </div>        
+        <div class="extraLinksContainer">   
             <div class="extraLinks">
                 <p>¿Aún no tienes cuenta como empresa? <a href="/andaFP/public/users/companies/companies-register.php">Solicitar acceso</a></p>
             </div>
